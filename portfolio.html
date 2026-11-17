@@ -5657,7 +5657,17 @@ window.palcoBridge={
  data:()=>clone({profile:state.profile,release:state.release}),
  apply:p=>{if(p.profile)Object.assign(state.profile,p.profile);if(p.release)Object.assign(state.release,p.release);touch();try{go(state.tab);}catch(e){}},
  go:t=>{try{go(t);}catch(e){}},
- flush:()=>persistKV()
+ flush:()=>persistKV(),
+ /* fotos vindas do Palco Pronto: um evento por grupo, espelhando o que está lá (fotos adicionadas aqui à mão são mantidas) */
+ syncPhotos:async groups=>{let add=0,rem=0;
+  for(const g of groups){let ev=state.events.find(e=>e.palco===g.key);
+   if(!ev){if(!g.items.length)continue;ev={id:uid(),ordem:nextOrd(state.events),incluir:true,titulo:g.titulo,tipo:g.tipo||'Show ou festival',data:'',local:'',cidade:g.cidade||'',convidados:'',cliente:'',funcao:'',descricao:g.descricao||'',fotos:[],capa:null,videos:[],palco:g.key,palcoMap:{}};state.events.push(ev);}
+   const old=ev.palcoMap||{};const map={};const pids=[];
+   for(const it of g.items){let pid=old[it.sig];if(!pid||!photos.has(pid)){try{pid=await addPhoto(new File([it.blob],it.name||'foto.jpg',{type:it.blob.type||'image/jpeg'}));add++;}catch(e){continue;}}map[it.sig]=pid;pids.push(pid);}
+   const palcoIds=new Set(Object.values(old));const own=(ev.fotos||[]).filter(id=>!palcoIds.has(id));rem+=[...palcoIds].filter(id=>!pids.includes(id)).length;
+   ev.fotos=[...pids,...own];ev.palcoMap=map;if(!ev.fotos.includes(ev.capa))ev.capa=ev.fotos[0]||null;
+   await store.put('events',ev);}
+  await gcPhotos();try{rerender();}catch(e){}return{add,rem};}
 };
 try{if(window.parent!==window&&window.parent.palcoReceive)document.documentElement.classList.add('in-palco');}catch(e){}
 </script>

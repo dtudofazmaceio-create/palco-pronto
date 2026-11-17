@@ -386,7 +386,7 @@ body.pp-full #ppFull{position:fixed;right:14px;bottom:14px;z-index:7001;box-shad
     <div class="side-foot">
       <div class="mini-prog"><div class="row1"><span>Credenciamento FMAC</span><span id="sideProgTxt">0%</span></div><div class="bar"><div id="sideProg" style="width:0"></div></div></div>
       <button class="btn ghost sm hide" id="installSide"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>Instalar no computador</button>
-      <div class="ver"><span>Versão 2.4</span><span>17/11/2026</span></div>
+      <div class="ver"><span>Versão 2.5</span><span>17/11/2026</span></div>
     </div>
   </aside>
   <div class="main">
@@ -495,7 +495,7 @@ body.pp-full #ppFull{position:fixed;right:14px;bottom:14px;z-index:7001;box-shad
           <div class="card-h"><div class="ic c-pink"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21"/></svg></div><div><h2>Apresentação artística</h2><p>Gera o PDF de release e ficha técnica em Formulários.</p></div></div>
           <div class="grid">
             <div class="f c12"><label for="release">Release resumido</label><textarea id="release"></textarea></div>
-            <div class="f c12"><label for="fichatec">Ficha técnica <span class="opt">– integrantes e funções</span></label><textarea id="fichatec" placeholder="Fulano – voz&#10;Ciclano – guitarra"></textarea></div>
+            <div class="f c12"><label for="fichatec">Ficha técnica <span class="opt">– integrantes e funções</span></label><textarea id="fichatec" placeholder="Fulano – voz&#10;Ciclano – guitarra"></textarea><button type="button" class="btn sm soft c-pink" id="teamBtn2" style="margin-top:8px"><svg class="i sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg>Importar equipe em lote</button></div>
             <div class="f c12"><label for="links">Links de vídeos e áudios</label><textarea id="links" style="min-height:64px"></textarea></div>
             <div class="f c6"><label for="carreira">Tempo de carreira</label><input id="carreira" placeholder="Ex.: 8 anos"></div>
             <div class="f c6"><label for="duracao">Duração do show</label><input id="duracao" placeholder="Ex.: 1h30"></div>
@@ -605,6 +605,7 @@ body.pp-full #ppFull{position:fixed;right:14px;bottom:14px;z-index:7001;box-shad
         <div class="ppbar"><div class="tx">Monte <b>portfólio, release, relatório de apresentações e declarações</b> com visual profissional. Ao gerar um PDF aqui, você escolhe em qual documento da empresa ativa ele será anexado.</div>
           <button class="btn sm soft c-blue" id="ppPush" title="Copia nome, atração, release, contatos e dados da empresa para o Portfólio Pro"><svg class="i sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>Meus dados → Portfólio</button>
           <button class="btn sm soft c-violet" id="ppPull" title="Traz nome, marca, bio e contatos do Portfólio Pro para Meus dados">Portfólio → Meus dados</button>
+          <button class="btn sm soft c-teal" id="ppPhotos" title="Leva as fotos de Documentos (Fotos e Portfólio) para eventos organizados no Portfólio Pro"><svg class="i sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21V9"/><path d="m7 14 5-5 5 5"/><path d="M5 3h14"/></svg>Enviar fotos</button>
           <button class="btn sm" id="ppFull"><svg class="i sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M19 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h5"/></svg><span>Tela cheia</span></button></div>
         <div id="ppWrap"><iframe id="ppFrame" title="Portfólio Pro" allow="clipboard-read; clipboard-write; fullscreen"></iframe><div id="ppLoading" class="hide">Abrindo o Portfólio Pro…</div></div>
       </section>
@@ -674,6 +675,13 @@ body.pp-full #ppFull{position:fixed;right:14px;bottom:14px;z-index:7001;box-shad
   <div class="f"><label for="ppSlot">Anexar em</label><select id="ppSlot"></select></div>
   <label class="imp-opt" style="margin-top:12px"><input type="checkbox" id="ppDl"><span>Também baixar o arquivo</span></label>
   <div class="row" style="margin-top:16px"><button class="btn" id="ppRecvNo">Só baixar</button><button class="btn primary" id="ppRecvYes">Anexar</button></div></div></div>
+<div class="modal-bg" id="teamModal" style="z-index:7900"><div class="modal wide c-pink" style="max-width:860px"><div class="mh"><span class="t"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg></span><h3>Importar equipe em lote</h3><button class="btn sm" id="teamX" style="margin-left:auto"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>Fechar</button></div>
+  <p style="margin-bottom:10px">Cole a lista ou importe um arquivo (<b>Excel .xlsx, CSV, TXT ou Word .docx</b>). Uma pessoa por linha, por exemplo <b>Nome – Função – CPF – mini currículo</b>. Planilhas com cabeçalho (Nome, Função, CPF, Currículo) também funcionam. A equipe vai para Meus dados, para a <b>Ficha técnica</b> e para os <b>Currículos</b>.</p>
+  <textarea id="teamTxt" style="min-height:120px" placeholder="Alex Assis – voz e violão – 000.000.000-00 – Músico há 10 anos, fundador do grupo&#10;Maria Souza; percussão&#10;João Lima, técnico de som"></textarea>
+  <div class="row" style="margin:10px 0 14px"><label class="btn sm soft c-violet" style="margin:0"><svg class="i sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21V9"/><path d="m7 14 5-5 5 5"/><path d="M5 3h14"/></svg>Importar arquivo<input type="file" id="teamFile" accept=".xlsx,.csv,.tsv,.txt,.docx" style="display:none"></label><span class="muted small">Confira e ajuste a leitura abaixo antes de cadastrar.</span></div>
+  <div id="teamPrev"></div>
+  <label class="imp-opt" style="margin-top:12px"><input type="checkbox" id="teamReplace"><span>Substituir a equipe atual<small>Sem marcar, as pessoas são somadas à lista atual. Nomes repetidos são atualizados, sem duplicar.</small></span></label>
+  <div class="row" style="margin-top:16px"><button class="btn" id="teamNo">Cancelar</button><button class="btn primary" id="teamYes" disabled>Cadastrar</button></div></div></div>
 <div class="modal-bg" id="sigModal"><div class="modal" style="max-width:620px;max-height:calc(100vh - 32px);overflow:auto"><h3>Importar formulários assinados</h3><p style="margin-bottom:12px">Confira o que está dentro de cada arquivo. Os arquivos são anexados sem nenhuma alteração, para a assinatura continuar válida.</p>
   <div id="sigList" class="imp-list"></div>
   <label class="imp-opt"><input type="checkbox" id="sigReplace" checked><span>Substituir os anexos antigos desses formulários<small>Remove os PDFs anexados antes para os mesmos formulários, inclusive os que aparecem como "Conferir assinatura".</small></span></label>
@@ -1498,15 +1506,16 @@ function renderDocs(){const list=docsFor();const groups=[];list.forEach(d=>{let 
  const s=docsStat();$("prog").style.width=Math.round(s.pct*100)+"%";$("prog-txt").textContent=`${s.ok} de ${s.tot} documentos obrigatórios prontos`;
  $("doclist").innerHTML=groups.map(G=>{const done=G.items.filter(d=>status(d).c==="b-ok").length;
   const GI={"Identificação":["user","c-blue"],"Empresa":["building","c-violet"],"Certidões":["shield","c-teal"],"Qualificação técnica":["mic","c-pink"],"Formulários assinados":["pen","c-violet"],"Se for o caso":["hand","c-amber"]}[G.g]||["folder","c-amber"];
-  return `<div class="list"><div class="list-h"><span class="gi ${GI[1]}">${ic(GI[0],"sm")}</span>${esc(G.g)}${G.g==="Formulários assinados"?`<a class="btn sm soft c-pink" href="#formularios" style="margin-left:8px">${ic("file","sm")}Gerar formulários</a>`:""}<span class="count">${done}/${G.items.length}</span></div>${G.items.map(d=>{const st=status(d);const[sc,si]=stIcon(st.c);const rec=mem.docs[d.id]||{};
+  return `<div class="list"><div class="list-h"><span class="gi ${GI[1]}">${ic(GI[0],"sm")}</span>${esc(G.g)}${G.g==="Qualificação técnica"?`<button class="btn sm soft c-pink" data-team style="margin-left:8px" title="Cadastrar várias pessoas de uma vez na ficha técnica e nos currículos">${ic("user","sm")}Importar equipe</button>`:""}${G.g==="Formulários assinados"?`<a class="btn sm soft c-pink" href="#formularios" style="margin-left:8px">${ic("file","sm")}Gerar formulários</a>`:""}<span class="count">${done}/${G.items.length}</span></div>${G.items.map(d=>{const st=status(d);const[sc,si]=stIcon(st.c);const rec=mem.docs[d.id]||{};
    return `<div class="item" data-drop="${d.id}"><span class="st ${sc}">${si}</span><div><div class="t">${esc(d.t)}</div>${d.d?`<div class="d">${esc(d.d)}</div>`:""}</div>
    <div class="acts"><span class="badge ${st.c}">${st.t}</span>${d.link?`<a class="btn sm soft c-blue" href="${d.link}" target="_blank" rel="noopener">${ic("ext","sm")}${d.lk||"Emitir"}</a>`:""}${PP_DOC[d.id]?`<button class="btn sm soft c-violet" data-ppo="${PP_DOC[d.id]}" title="Montar no Portfólio Pro e anexar aqui">${ic("palette","sm")}Portfólio Pro</button>`:""}${TPL[d.id]?`<button class="btn sm soft c-pink" data-tpl="${d.id}" title="Preencher um modelo pronto ou baixar em Word">${ic("edit","sm")}Modelo</button>`:""}<label class="btn sm primary" style="margin:0">${ic("clip","sm")}Anexar<input type="file" multiple data-id="${d.id}" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx,.webp"></label></div>
    ${(rec.files||[]).length||d.cert?`<div class="more">${(rec.files||[]).map((f,i)=>`<span class="file">${ic("file","sm")}<span title="${esc(f.name)}">${esc(f.name)}</span><button title="Remover" data-rm="${d.id}" data-i="${i}">${ic("x","sm")}</button></span>`).join("")}
    ${d.cert?`<div class="dates"><div class="f"><label>Emissão</label><input type="date" data-em="${d.id}" value="${rec.emissao||""}"></div><div class="f"><label>Válida até</label><input type="date" data-va="${d.id}" value="${rec.validade||""}"></div></div>`:""}</div>`:""}</div>`}).join("")}</div>`}).join("");
  document.querySelectorAll("#doclist input[type=file]").forEach(inp=>inp.onchange=()=>addFiles(inp.dataset.id,[...inp.files]));
  document.querySelectorAll("#doclist [data-tpl]").forEach(b=>b.onclick=()=>openTpl(b.dataset.tpl));
+ document.querySelectorAll("#doclist [data-team]").forEach(b=>b.onclick=openTeam);
  document.querySelectorAll("#doclist [data-ppo]").forEach(b=>b.onclick=()=>ppOpen(b.dataset.ppo));
- document.querySelectorAll("#doclist [data-rm]").forEach(b=>b.onclick=async()=>{const id=b.dataset.rm;const rec=mem.docs[id];const f=rec.files[+b.dataset.i];if(!await confirmBox("Remover anexo?",f.name,"Remover"))return;rec.files.splice(+b.dataset.i,1);if(!rec.files.length&&!rec.emissao&&!rec.validade)await del("docs",id);else await put("docs",id,rec);renderAll()});
+ document.querySelectorAll("#doclist [data-rm]").forEach(b=>b.onclick=async()=>{const id=b.dataset.rm;const rec=mem.docs[id];const f=rec.files[+b.dataset.i];if(!await confirmBox("Remover anexo?",f.name,"Remover"))return;rec.files.splice(+b.dataset.i,1);if(!rec.files.length&&!rec.emissao&&!rec.validade)await del("docs",id);else await put("docs",id,rec);if(id==="fotos"||id==="port")ppPhotosSoon();renderAll()});
  document.querySelectorAll("#doclist [data-em],#doclist [data-va]").forEach(inp=>inp.onchange=async()=>{const id=inp.dataset.em||inp.dataset.va;const rec=mem.docs[id]||{files:[]};if(inp.dataset.em)rec.emissao=inp.value;else rec.validade=inp.value;await put("docs",id,rec);renderAll()});
  document.querySelectorAll("#doclist [data-drop]").forEach(el=>{el.ondragover=e=>{e.preventDefault();el.classList.add("drag")};el.ondragleave=()=>el.classList.remove("drag");el.ondrop=e=>{e.preventDefault();el.classList.remove("drag");if(e.dataTransfer.files.length)addFiles(el.dataset.drop,[...e.dataTransfer.files])}})}
 
@@ -1684,8 +1693,8 @@ async function ppSync(mode){const b=ppB();if(!b)return;await savePerfil(true);co
  if(mode!=="push"){const src=palcoFromPP(mode==="pull"?d:b.data());const p=P();const patch=ppDiff(p,src,mode==="pull");if(p.tipo==="PF"){delete patch.razao;delete patch.cnpj}nL=Object.keys(patch).length;if(nL){await put("perfil","main",{...p,...patch});fillForm();renderAll(true)}}
  if(mode!=="auto")toast(mode==="push"?(nP?`Portfólio atualizado (${nP} campo(s))`:"O Portfólio já está igual aos seus dados"):(nL?`Meus dados atualizados (${nL} campo(s))`:"Seus dados já estão iguais ao Portfólio"));
  else if(nP||nL)toast(`Dados sincronizados com o Portfólio Pro`)}
-function ppEnsure(){pp.frame=$("ppFrame");if(!pp.frame.getAttribute("src")){$("ppLoading").classList.remove("hide");pp.frame.onload=async()=>{for(let i=0;i<150;i++){try{if(pp.frame.contentWindow.__ppReady)break}catch(e){}await new Promise(r=>setTimeout(r,100))}pp.ready=true;$("ppLoading").classList.add("hide");await ppSync("auto");if(pp.tab){ppB()&&ppB().go(pp.tab);pp.tab=null}};pp.frame.src="portfolio.html"}
- else if(pp.ready){ppSync("auto");if(pp.tab){ppB()&&ppB().go(pp.tab);pp.tab=null}}}
+function ppEnsure(){pp.frame=$("ppFrame");if(!pp.frame.getAttribute("src")){$("ppLoading").classList.remove("hide");pp.frame.onload=async()=>{for(let i=0;i<150;i++){try{if(pp.frame.contentWindow.__ppReady)break}catch(e){}await new Promise(r=>setTimeout(r,100))}pp.ready=true;$("ppLoading").classList.add("hide");await ppSync("auto");await ppPhotos(false);if(pp.tab){ppB()&&ppB().go(pp.tab);pp.tab=null}};pp.frame.src="portfolio.html"}
+ else if(pp.ready){ppSync("auto").then(()=>ppPhotos(false));if(pp.tab){ppB()&&ppB().go(pp.tab);pp.tab=null}}}
 function ppOpen(tab){pp.tab=tab||null;if(location.hash==="#portfolio")ppEnsure();else location.hash="#portfolio"}
 window.addEventListener("hashchange",()=>{if(cur==="portfolio")ppEnsure();else if(pp.ready){const b=ppB();if(b)b.flush()}});
 $("ppPush").onclick=()=>ppSync("push");$("ppPull").onclick=()=>ppSync("pull");
@@ -1705,7 +1714,71 @@ window.palcoReceive=({kind,name,blob})=>new Promise(res=>{const sig=new Set(SIG_
  $("ppRecvX").onclick=()=>done("declined");
  $("ppRecvYes").onclick=async()=>{const slot=$("ppSlot").value;if(slot){await addFiles(slot,[new File([blob],name,{type:"application/pdf"})]);const d=DOCS.find(x=>x.id===slot);toast(`Anexado em ${d?d.t:"Documentos"}`)}if($("ppDl").checked||!slot)await saveFile(name,blob);done("saved")}});
 setTimeout(()=>{if(cur==="portfolio")ppEnsure()},0);
+// fotos do painel Documentos → eventos organizados no Portfólio Pro (um por empresa e por tipo)
+function ppPhotoGroups(){const atr=P().atracao||"";const multi=prof.list.length>1;const emp=multi?` (${profName(prof.active)})`:"";
+ const fromTpl=id=>{const rec=mem.docs["tpl-"+id];return((rec&&rec.files)||[]).filter(f=>f.blob).map(f=>({sig:"t:"+f.name+"|"+f.blob.size,blob:f.blob,name:f.name}))};
+ const fromSlot=id=>((mem.docs[id]||{}).files||[]).filter(f=>f.blob&&/^image\//.test(f.type||f.blob.type||"")).map(f=>({sig:"a:"+f.name+"|"+f.blob.size,blob:f.blob,name:f.name}));
+ const dedupe=a=>a.filter((x,i)=>a.findIndex(y=>y.sig===x.sig)===i);
+ return[{key:prof.active+":fotos",titulo:`Fotos de divulgação${atr?" – "+atr:""}${emp}`,cidade:[P().cidade,P().uf].filter(Boolean).join(", "),descricao:"Fotos coloridas cadastradas no Palco Pronto (Documentos › Fotos). Atualizado automaticamente.",items:dedupe([...fromTpl("fotos"),...fromSlot("fotos")])},
+  {key:prof.active+":port",titulo:`Shows, cartazes e imprensa${atr?" – "+atr:""}${emp}`,cidade:[P().cidade,P().uf].filter(Boolean).join(", "),descricao:"Matérias, cartazes, fotos de shows e prints cadastrados no Palco Pronto (Documentos › Portfólio). Atualizado automaticamente.",items:dedupe([...fromTpl("port"),...fromSlot("port")])}]}
+async function ppPhotos(manual){const b=ppB();if(!b||!b.syncPhotos){if(manual)toast("Abrindo o Portfólio Pro…");return}
+ try{const g=ppPhotoGroups();const r=await b.syncPhotos(g);const tot=g.reduce((a,x)=>a+x.items.length,0);
+  if(manual)toast(tot?`Fotos no Portfólio Pro: ${r.add} nova(s)${r.rem?`, ${r.rem} removida(s)`:""} · ${tot} no total`:"Nenhuma foto cadastrada em Documentos (Fotos ou Portfólio)");else if(r.add||r.rem)toast(`Portfólio Pro: ${r.add} foto(s) nova(s) recebida(s)`)}catch(e){if(manual)toast("Erro ao enviar fotos: "+e.message)}}
+let ppPhT;const ppPhotosSoon=()=>{if(!pp.ready)return;clearTimeout(ppPhT);ppPhT=setTimeout(()=>ppPhotos(false),1500)};
+{const _af=addFiles;addFiles=async(id,fs)=>{const r=await _af(id,fs);if(id==="fotos"||id==="port")ppPhotosSoon();return r}}
+{const _ts=tplSave;tplSave=imgs=>{_ts(imgs);if(imgs&&(tpl.id==="fotos"||tpl.id==="port"))ppPhotosSoon()}}
+$("ppPhotos").onclick=()=>{if(!pp.ready){ppOpen();setTimeout(function w(){pp.ready?ppPhotos(true):setTimeout(w,500)},500)}else ppPhotos(true)};
 
+// ---------- EQUIPE EM LOTE (ficha técnica + currículos) ----------
+const team={rows:[]};
+const reCPF=/\b\d{3}\.?\d{3}\.?\d{3}-?\d{2}\b/;
+const nkey=s=>slug(s).toLowerCase();
+async function readTeamFile(f){const n=f.name.toLowerCase();
+ if(n.endsWith(".xlsx")){const z=await JSZip.loadAsync(f);const ss=[];const sx=z.file("xl/sharedStrings.xml");
+  if(sx){const d=new DOMParser().parseFromString(await sx.async("string"),"application/xml");[...d.getElementsByTagName("si")].forEach(si=>ss.push([...si.getElementsByTagName("t")].map(t=>t.textContent).join("")))}
+  const wf=Object.keys(z.files).filter(x=>/^xl\/worksheets\/sheet\d+\.xml$/.test(x)).sort((a,b)=>parseInt(a.match(/\d+/))-parseInt(b.match(/\d+/)))[0];if(!wf)throw new Error("planilha vazia");
+  const d=new DOMParser().parseFromString(await z.file(wf).async("string"),"application/xml");
+  return [...d.getElementsByTagName("row")].map(r=>{const out=[];[...r.getElementsByTagName("c")].forEach(c=>{const ref=(c.getAttribute("r")||"").replace(/\d+/g,"");const col=ref?ref.split("").reduce((a,ch)=>a*26+ch.charCodeAt(0)-64,0)-1:out.length;const t=c.getAttribute("t");const v0=(c.getElementsByTagName("v")[0]||{}).textContent||"";
+   out[col]=t==="s"?(ss[+v0]||""):t==="inlineStr"?[...c.getElementsByTagName("t")].map(x=>x.textContent).join(""):v0});return Array.from(out,x=>String(x||"").replace(/\t|\n/g," ").trim()).join("\t")}).join("\n")}
+ if(n.endsWith(".docx")){const z=await JSZip.loadAsync(f);const d=new DOMParser().parseFromString(await z.file("word/document.xml").async("string"),"application/xml");const body=d.getElementsByTagNameNS(NS_W,"body")[0];const L=[];
+  for(const el of body.children){if(el.localName==="tbl"){ws(el,"tr").forEach(tr=>L.push(ws(tr,"tc").map(tc=>ws(tc,"p").map(pText).join(" ").trim()).join("\t")))}else if(el.localName==="p")L.push(pText(el))}return L.join("\n")}
+ if(/\.(xls|doc|pdf)$/.test(n))throw new Error("formato não suportado: salve como .xlsx, .docx, .csv ou .txt");
+ return await f.text()}
+function parseTeam(text){const lines=String(text||"").split(/\r?\n/).map(l=>l.replace(/^\s*(?:[-•*·▪]|\d+[.)-])\s+/,"").trim()).filter(l=>l&&!/^[\t;,|\s]+$/.test(l));if(!lines.length)return[];
+ const delOf=l=>["\t",";","|"," – "," — "," - ",":",","].find(d=>l.includes(d));
+ const H=lines[0].toLowerCase();let map=null;
+ if(/\bnome\b/.test(H)&&/fun[cç][aã]o|cargo|instrumento|atua|cpf|curr/.test(H)){const d=delOf(lines[0])||"\t";const hs=lines[0].split(d).map(h=>h.trim().toLowerCase());
+  map={d,i:{nome:hs.findIndex(h=>/nome/.test(h)),funcao:hs.findIndex(h=>/fun[cç]|cargo|instrumento|atua/.test(h)),cpf:hs.findIndex(h=>/cpf|documento/.test(h)),curr:hs.findIndex(h=>/curr|bio|resumo|experi|mini/.test(h))}};lines.shift()}
+ const rows=[];
+ for(const l of lines){let r={nome:"",funcao:"",cpf:"",curr:""};
+  if(map){const ps=l.split(map.d).map(x=>x.trim());for(const k in map.i)if(map.i[k]>=0)r[k]=ps[map.i[k]]||""}
+  else{const d=delOf(l);let ps=d?l.split(d).map(x=>x.trim()).filter(Boolean):[l];
+   const ci=ps.findIndex(x=>reCPF.test(x));if(ci>=0){r.cpf=ps[ci].match(reCPF)[0];ps.splice(ci,1)}
+   ps=ps.filter(x=>!/@|^\(?\d{2}\)?\s?9?\d{4}-?\d{4}$/.test(x));
+   r.nome=ps[0]||"";r.funcao=ps[1]||"";r.curr=ps.slice(2).join(", ")}
+  r.nome=r.nome.replace(reCPF,"").replace(/\s{2,}/g," ").trim();if(!r.cpf&&reCPF.test(l))r.cpf=l.match(reCPF)[0];
+  if(r.nome&&r.nome.length<=80)rows.push(r)}
+ return rows}
+function renderTeamPrev(){const n=team.rows.length;$("teamYes").textContent=n?`Cadastrar ${n} pessoa${n>1?"s":""}`:"Cadastrar";$("teamYes").disabled=!n;
+ $("teamPrev").innerHTML=n?`<div class="tt"><table class="tpl-t"><thead><tr><th>Nome</th><th>Função</th><th>CPF</th><th>Mini currículo</th><th></th></tr></thead><tbody>${team.rows.map((r,i)=>`<tr>${["nome","funcao","cpf","curr"].map(k=>`<td><input data-tr="${i}" data-k="${k}" value="${esc(r[k])}"></td>`).join("")}<td><button class="tpl-rm" data-trx="${i}" title="Remover">${ic("x","sm")}</button></td></tr>`).join("")}</tbody></table></div>`:`<p class="muted small">Nenhuma pessoa lida ainda.</p>`}
+function openTeam(){team.rows=[];$("teamTxt").value="";$("teamReplace").checked=false;renderTeamPrev();$("teamModal").classList.add("on");setTimeout(()=>$("teamTxt").focus(),50)}
+let teamT;$("teamTxt").oninput=()=>{clearTimeout(teamT);teamT=setTimeout(()=>{team.rows=parseTeam($("teamTxt").value);renderTeamPrev()},300)};
+$("teamFile").onchange=async e=>{const f=e.target.files[0];e.target.value="";if(!f)return;try{const t=await readTeamFile(f);$("teamTxt").value=t;team.rows=parseTeam(t);renderTeamPrev();toast(team.rows.length?`${team.rows.length} pessoa(s) encontrada(s) em ${f.name}`:"Não encontrei nomes nesse arquivo")}catch(err){toast("Não foi possível ler: "+err.message)}};
+$("teamPrev").addEventListener("input",e=>{const t=e.target;if(t.dataset.tr!=null)team.rows[+t.dataset.tr][t.dataset.k]=t.value});
+$("teamPrev").addEventListener("click",e=>{const b=e.target.closest("[data-trx]");if(b){team.rows.splice(+b.dataset.trx,1);renderTeamPrev()}});
+const closeTeam=()=>$("teamModal").classList.remove("on");$("teamNo").onclick=closeTeam;$("teamX").onclick=closeTeam;
+$("teamYes").onclick=async()=>{const rows=team.rows.map(r=>({nome:r.nome.trim(),funcao:r.funcao.trim(),cpf:r.cpf.trim(),curr:r.curr.trim()})).filter(r=>r.nome);if(!rows.length)return;const n=await teamApply(rows,$("teamReplace").checked);closeTeam();toast(`Equipe cadastrada: ${n} pessoa(s) na ficha técnica e nos currículos`)};
+async function teamApply(rows,replace){await savePerfil(true);
+ const merge=(list,mk)=>{const out=replace?[]:(list||[]).filter(r=>Object.values(r).some(v=>String(v||"").trim()));for(const r of rows){const i=out.findIndex(x=>nkey(x.nome)===nkey(r.nome));const v=mk(r,i>=0?out[i]:{});if(i>=0)out[i]=v;else out.push(v)}return out};
+ const p=P();const fr=merge(fichaRows(),(r,o)=>({nome:r.nome,funcao:r.funcao||o.funcao||""}));
+ await put("perfil","main",{...p,fichatec:fr.map(r=>r.funcao?`${r.nome} – ${r.funcao}`:r.nome).join("\n"),integrantes:p.integrantes||String(fr.length)});
+ mem.meta.tpl=mem.meta.tpl||{};const T=mem.meta.tpl;
+ const ft=T.ftec?JSON.parse(JSON.stringify(T.ftec)):tplPrefill("ftec");ft.equipe=merge(ft.equipe,(r,o)=>({nome:r.nome,funcao:r.funcao||o.funcao||"",doc:r.cpf||o.doc||""}));
+ const cv=T.curr?JSON.parse(JSON.stringify(T.curr)):tplPrefill("curr");cv.pessoas=merge(cv.pessoas,(r,o)=>({nome:r.nome,funcao:r.funcao||o.funcao||"",texto:r.curr||o.texto||""}));
+ if(!ft.atracao)ft.atracao=p.atracao||"";if(!cv.atracao)cv.atracao=p.atracao||"";
+ T.ftec=ft;T.curr=cv;await put("meta","main",mem.meta);fillForm();renderAll();return fr.length}
+
+$("teamBtn2").onclick=openTeam;
 // ---------- FORMULÁRIOS ----------
 async function renderGerarDocs(){const rows=await Promise.all(DOCDEFS.map(async d=>({d,m:await missing(d)})));
  $("docsGen").innerHTML=rows.map(({d,m})=>{const sg=signState(d.id);const c=sg==="ok"?"b-ok":sg==="check"?"b-warn":m.length?(d.opt?"b-mute":"b-warn"):"b-mute";const t=sg==="ok"?"Assinado":sg==="check"?"Conferir assinatura":m.length?(d.opt?"Opcional":"Faltam dados"):"Falta assinar";const[sc,si]=stIcon(m.length?(d.opt?"b-mute":"b-warn"):"b-ok");
