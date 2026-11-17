@@ -341,6 +341,15 @@ ol.howto{margin:8px 0 0;padding-left:20px;color:var(--ink-2)}ol.howto li{margin:
 }
 @media (max-width:520px){.steps,.stats{grid-template-columns:1fr 1fr}.steps{grid-template-columns:1fr}.c3{grid-column:span 6}.dates .f{width:calc(50% - 5px)}.item .acts,.item .more{padding-left:0}.stat b{font-size:19px}}
 @media print{.side,.top,.bnav{display:none}}
+.tpl-t{width:100%;border-collapse:collapse;min-width:480px}.tpl-t th{font-size:12px;text-align:left;color:var(--muted);font-weight:700;padding:2px 4px 6px}.tpl-t td{padding:3px}.tpl-t input{padding:7px 9px;font-size:13.5px}.tt{overflow-x:auto}
+.tpl-rm{width:28px;height:28px;border-radius:50%;border:1px solid var(--line);background:var(--surface);color:var(--muted);display:grid;place-items:center;cursor:pointer;padding:0}.tpl-rm:hover{color:var(--bad,#c0392b);border-color:currentColor}
+.tpl-p{border:1.5px solid var(--line);border-radius:14px;padding:12px 44px 12px 12px;margin-bottom:10px;position:relative}.tpl-p>.tpl-rm{position:absolute;top:10px;right:10px}
+.tpl-imgs{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.tpl-img{border:1.5px solid var(--line);border-radius:12px;overflow:hidden;background:var(--surface);position:relative}.tpl-img img{width:100%;height:120px;object-fit:cover;display:block;background:var(--surface-2)}
+.tpl-img input{border:0;border-top:1.5px solid var(--line);border-radius:0;font-size:12.5px;padding:7px 9px}.tpl-img .tpl-rm{position:absolute;top:6px;right:6px;background:rgba(0,0,0,.6);color:#fff;border:0}
+.f label.tpl-add,.tpl-add{min-height:120px;border:1.5px dashed var(--line);border-radius:12px;display:flex;flex-direction:column;gap:6px;align-items:center;justify-content:center;color:var(--brand);font-weight:700;font-size:13px;cursor:pointer;margin:0}.f label.tpl-add:hover{border-color:var(--brand)}.tpl-add input{display:none}
+.tpl-foot{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px;align-items:center}.tpl-foot .sp{flex:1}.tpl-foot label input{display:none}
+@media (max-width:520px){.tpl-foot .btn{flex:1 1 auto;justify-content:center}.tpl-foot .sp{display:none}}
 </style>
 </head>
 <body>
@@ -363,7 +372,7 @@ ol.howto{margin:8px 0 0;padding-left:20px;color:var(--ink-2)}ol.howto li{margin:
     <div class="side-foot">
       <div class="mini-prog"><div class="row1"><span>Credenciamento FMAC</span><span id="sideProgTxt">0%</span></div><div class="bar"><div id="sideProg" style="width:0"></div></div></div>
       <button class="btn ghost sm hide" id="installSide"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>Instalar no computador</button>
-      <div class="ver"><span>Versão 2.1</span><span>16/11/2026</span></div>
+      <div class="ver"><span>Versão 2.2</span><span>17/11/2026</span></div>
     </div>
   </aside>
   <div class="main">
@@ -629,6 +638,11 @@ ol.howto{margin:8px 0 0;padding-left:20px;color:var(--ink-2)}ol.howto li{margin:
 </nav></div></div>
 
 <div class="modal-bg" id="modal"><div class="modal"><h3 id="mdT"></h3><p id="mdP"></p><div class="row"><button class="btn" id="mdNo">Cancelar</button><button class="btn primary" id="mdYes">Confirmar</button></div></div></div>
+<div class="modal-bg" id="tplModal" style="z-index:7900"><div class="modal wide c-pink" style="max-width:880px"><div class="mh"><span class="t"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4L19 9a2.1 2.1 0 0 0-4-4L4 16z"/><path d="m13.5 6.5 4 4"/></svg></span><h3 id="tplT">Modelo</h3><button class="btn sm" id="tplClose" style="margin-left:auto"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>Fechar</button></div>
+  <div class="notice info" id="tplNote"></div>
+  <div id="tplBody"></div>
+  <div class="tpl-foot"><label class="btn sm soft c-violet" title="Anexar o arquivo que você preencheu no Word ou Google Docs (PDF, Word ou imagem)"><svg class="i sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21V9"/><path d="m7 14 5-5 5 5"/><path d="M5 3h14"/></svg>Importar preenchido<input type="file" id="tplImp" multiple accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.webp"></label><button class="btn sm soft c-teal hide" id="tplOrig" title="Anexa as fotos como arquivos de imagem, sem montar PDF"><svg class="i sm" viewBox="0 0 24 24" aria-hidden="true"><path d="m21 11-8.5 8.5a5 5 0 0 1-7-7L14 4a3.5 3.5 0 0 1 5 5l-8.6 8.5a2 2 0 0 1-2.8-2.8L15.5 7"/></svg>Anexar fotos originais</button><button class="btn sm" id="tplReset" title="Volta os textos para os de Meus dados">Recomeçar</button><span class="sp"></span><button class="btn sm outline c-blue" id="tplWord"><svg class="i sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H6.5A1.5 1.5 0 0 0 5 4.5v15A1.5 1.5 0 0 0 6.5 21h11a1.5 1.5 0 0 0 1.5-1.5V8z"/><path d="M14 3v5h5"/><path d="m8 11.5 1.3 5 1.7-4 1.7 4 1.3-5"/></svg>Baixar Word</button><button class="btn sm outline c-red" id="tplPdf"><svg class="i sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H6.5A1.5 1.5 0 0 0 5 4.5v15A1.5 1.5 0 0 0 6.5 21h11a1.5 1.5 0 0 0 1.5-1.5V8z"/><path d="M14 3v5h5"/><path d="M8.5 17v-4.5h1.3a1.3 1.3 0 0 1 0 2.6H8.5M13 12.5v4.5h.8a2 2 0 0 0 2-2.2 2 2 0 0 0-2-2.3z"/></svg>Baixar PDF</button><button class="btn sm primary" id="tplAttach"><svg class="i sm" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>Gerar PDF e anexar</button></div>
+</div></div>
 <div class="modal-bg" id="sigModal"><div class="modal" style="max-width:620px;max-height:calc(100vh - 32px);overflow:auto"><h3>Importar formulários assinados</h3><p style="margin-bottom:12px">Confira o que está dentro de cada arquivo. Os arquivos são anexados sem nenhuma alteração, para a assinatura continuar válida.</p>
   <div id="sigList" class="imp-list"></div>
   <label class="imp-opt"><input type="checkbox" id="sigReplace" checked><span>Substituir os anexos antigos desses formulários<small>Remove os PDFs anexados antes para os mesmos formulários, inclusive os que aparecem como "Conferir assinatura".</small></span></label>
@@ -1437,13 +1451,170 @@ function renderDocs(){const list=docsFor();const groups=[];list.forEach(d=>{let 
   const GI={"Identificação":["user","c-blue"],"Empresa":["building","c-violet"],"Certidões":["shield","c-teal"],"Qualificação técnica":["mic","c-pink"],"Formulários assinados":["pen","c-violet"],"Se for o caso":["hand","c-amber"]}[G.g]||["folder","c-amber"];
   return `<div class="list"><div class="list-h"><span class="gi ${GI[1]}">${ic(GI[0],"sm")}</span>${esc(G.g)}${G.g==="Formulários assinados"?`<a class="btn sm soft c-pink" href="#formularios" style="margin-left:8px">${ic("file","sm")}Gerar formulários</a>`:""}<span class="count">${done}/${G.items.length}</span></div>${G.items.map(d=>{const st=status(d);const[sc,si]=stIcon(st.c);const rec=mem.docs[d.id]||{};
    return `<div class="item" data-drop="${d.id}"><span class="st ${sc}">${si}</span><div><div class="t">${esc(d.t)}</div>${d.d?`<div class="d">${esc(d.d)}</div>`:""}</div>
-   <div class="acts"><span class="badge ${st.c}">${st.t}</span>${d.link?`<a class="btn sm soft c-blue" href="${d.link}" target="_blank" rel="noopener">${ic("ext","sm")}${d.lk||"Emitir"}</a>`:""}<label class="btn sm primary" style="margin:0">${ic("clip","sm")}Anexar<input type="file" multiple data-id="${d.id}" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx,.webp"></label></div>
+   <div class="acts"><span class="badge ${st.c}">${st.t}</span>${d.link?`<a class="btn sm soft c-blue" href="${d.link}" target="_blank" rel="noopener">${ic("ext","sm")}${d.lk||"Emitir"}</a>`:""}${TPL[d.id]?`<button class="btn sm soft c-pink" data-tpl="${d.id}" title="Preencher um modelo pronto ou baixar em Word">${ic("edit","sm")}Modelo</button>`:""}<label class="btn sm primary" style="margin:0">${ic("clip","sm")}Anexar<input type="file" multiple data-id="${d.id}" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx,.webp"></label></div>
    ${(rec.files||[]).length||d.cert?`<div class="more">${(rec.files||[]).map((f,i)=>`<span class="file">${ic("file","sm")}<span title="${esc(f.name)}">${esc(f.name)}</span><button title="Remover" data-rm="${d.id}" data-i="${i}">${ic("x","sm")}</button></span>`).join("")}
    ${d.cert?`<div class="dates"><div class="f"><label>Emissão</label><input type="date" data-em="${d.id}" value="${rec.emissao||""}"></div><div class="f"><label>Válida até</label><input type="date" data-va="${d.id}" value="${rec.validade||""}"></div></div>`:""}</div>`:""}</div>`}).join("")}</div>`}).join("");
  document.querySelectorAll("#doclist input[type=file]").forEach(inp=>inp.onchange=()=>addFiles(inp.dataset.id,[...inp.files]));
+ document.querySelectorAll("#doclist [data-tpl]").forEach(b=>b.onclick=()=>openTpl(b.dataset.tpl));
  document.querySelectorAll("#doclist [data-rm]").forEach(b=>b.onclick=async()=>{const id=b.dataset.rm;const rec=mem.docs[id];const f=rec.files[+b.dataset.i];if(!await confirmBox("Remover anexo?",f.name,"Remover"))return;rec.files.splice(+b.dataset.i,1);if(!rec.files.length&&!rec.emissao&&!rec.validade)await del("docs",id);else await put("docs",id,rec);renderAll()});
  document.querySelectorAll("#doclist [data-em],#doclist [data-va]").forEach(inp=>inp.onchange=async()=>{const id=inp.dataset.em||inp.dataset.va;const rec=mem.docs[id]||{files:[]};if(inp.dataset.em)rec.emissao=inp.value;else rec.validade=inp.value;await put("docs",id,rec);renderAll()});
  document.querySelectorAll("#doclist [data-drop]").forEach(el=>{el.ondragover=e=>{e.preventDefault();el.classList.add("drag")};el.ondragleave=()=>el.classList.remove("drag");el.ondrop=e=>{e.preventDefault();el.classList.remove("drag");if(e.dataTransfer.files.length)addFiles(el.dataset.drop,[...e.dataTransfer.files])}})}
+
+// ---------- MODELOS DE DOCUMENTOS (preencher aqui ou baixar Word, importar de volta) ----------
+const fichaRows=()=>String(P().fichatec||"").split(/\n+/).map(l=>l.trim()).filter(Boolean).map(l=>{const m=l.split(/\s+[–—-]\s+|:\s+/);return{nome:(m[0]||"").trim(),funcao:(m.slice(1).join(" – ")||"").trim()}});
+const fAtr={k:"atracao",l:"Nome da atração",pf:p=>p.atracao};
+const TPL={
+ release:{t:"Release",file:"Release",fields:[fAtr,
+  {k:"estilo",l:"Gênero / estilo",pf:p=>[(p.generos||[]).join(", "),p.categoria].filter(Boolean)[0]||""},
+  {k:"origem",l:"Cidade de origem e início da carreira",ph:"Ex.: Maceió/AL, desde 2015"},
+  {k:"texto",l:"Apresentação",type:"area",rows:7,pf:p=>p.release,ph:"Quem é a atração, proposta artística, público, formação do grupo"},
+  {k:"destaques",l:"Principais trabalhos e apresentações",type:"area",ph:"Um por linha: evento – local – ano"},
+  {k:"links",l:"Vídeos, áudios e redes sociais",type:"area",rows:3,pf:p=>[p.links,p.redes].filter(Boolean).join("\n")},
+  {k:"contato",l:"Contato",pf:p=>[p.nome,p.telefone,p.email].filter(Boolean).join(" · ")}],
+  imgs:{max:3,cap:false,l:"Foto de divulgação",h:95}},
+ ftec:{t:"Ficha técnica",file:"Ficha-Tecnica",fields:[fAtr,
+  {k:"equipe",l:"Integrantes e equipe técnica",type:"table",cols:[["nome","Nome completo",5],["funcao","Função",3],["doc","CPF (opcional)",2]],pf:()=>fichaRows().map(r=>({...r,doc:""}))},
+  {k:"obs",l:"Observações",type:"area",rows:3}]},
+ curr:{t:"Currículo dos artistas e técnicos",file:"Curriculos",fields:[fAtr,
+  {k:"pessoas",l:"Pessoas",type:"people",pf:()=>fichaRows().map(r=>({...r,texto:""}))}]},
+ port:{t:"Portfólio",file:"Portfolio",fields:[fAtr,
+  {k:"apres",l:"Apresentação",type:"area",rows:4,pf:p=>p.release,ph:"Resumo da trajetória"},
+  {k:"links",l:"Links (vídeos, matérias, redes)",type:"area",rows:3,pf:p=>[p.links,p.redes].filter(Boolean).join("\n")}],
+  imgs:{max:30,cap:true,l:"Matérias, cartazes, fotos de shows, prints de redes sociais",h:120,ph:"Legenda (opcional)"}},
+ fotos:{t:"Fotos",file:"Fotos",orig:1,fields:[fAtr,{k:"credito",l:"Crédito das fotos (fotógrafo)"}],
+  imgs:{max:15,cap:true,l:"Fotos coloridas em boa resolução",h:225,ph:"Legenda (opcional)"}},
+ rider:{t:"Repertório e rider técnico",file:"Repertorio-e-Rider",fields:[fAtr,
+  {k:"duracao",l:"Duração do show",ph:"Ex.: 60 minutos",half:1},{k:"integr",l:"Nº de pessoas no palco",pf:p=>p.integrantes,half:1},
+  {k:"repert",l:"Repertório",type:"table",cols:[["musica","Música",5],["autor","Autor / compositor",4],["dur","Duração",2]]},
+  {k:"inputs",l:"Mapa de canais (input list)",type:"table",cols:[["canal","Canal",1],["inst","Instrumento / voz",4],["mic","Microfone / DI",3],["obs","Obs.",3]]},
+  {k:"palco",l:"Palco",type:"area",rows:2,ph:"Dimensões mínimas, praticáveis, tapete"},
+  {k:"som",l:"Sonorização (PA e monitores)",type:"area",rows:3},
+  {k:"luz",l:"Iluminação",type:"area",rows:2},
+  {k:"energia",l:"Energia elétrica",type:"area",rows:2,ph:"Ex.: 2 pontos 220V no palco"},
+  {k:"camarim",l:"Camarim",type:"area",rows:2},
+  {k:"contatoTec",l:"Contato técnico",pf:p=>[p.nome,p.telefone].filter(Boolean).join(" · ")}],
+  imgs:{max:2,cap:true,l:"Mapa de palco",h:120,ph:"Ex.: Mapa de palco"}},
+ cache:{t:"Recibo de cachê",file:"Recibo-de-Cache",note:"Use quando a apresentação não teve nota fiscal nem contrato. Gere um recibo por apresentação, assine e anexe.",fields:[
+  {k:"contratante",l:"Quem pagou (contratante)"},{k:"docContr",l:"CPF/CNPJ do contratante",half:1},{k:"valor",l:"Valor (R$)",half:1,ph:"Ex.: 1.500,00"},
+  {k:"extenso",l:"Valor por extenso",ph:"Ex.: mil e quinhentos reais"},
+  {k:"evento",l:"Evento / apresentação"},{k:"local",l:"Local",half:1},{k:"data",l:"Data da apresentação",type:"date",half:1},
+  {k:"atracao",l:"Atração",pf:p=>p.atracao},
+  {k:"receb",l:"Quem recebeu",pf:p=>p.tipo==="PF"?p.nome:p.razao,half:1},{k:"docReceb",l:"CPF/CNPJ de quem recebeu",pf:p=>p.tipo==="PF"?p.cpf:p.cnpj,half:1},
+  {k:"cidade",l:"Cidade",pf:p=>p.cidade||"Maceió",half:1},{k:"emissao",l:"Data do recibo",type:"date",pf:()=>new Date().toISOString().slice(0,10),half:1}]}
+};
+const tpl={id:null,data:null,imgs:[]};
+function tplPrefill(id){const p=P();const d={};TPL[id].fields.forEach(f=>{const v=f.pf?f.pf(p):"";d[f.k]=f.type==="table"||f.type==="people"?(Array.isArray(v)?v:[]):(v==null?"":String(v))});return d}
+async function openTpl(id){await savePerfil(true);const T=TPL[id];tpl.id=id;const sv=(mem.meta.tpl||{})[id];tpl.data=sv?JSON.parse(JSON.stringify(sv)):tplPrefill(id);
+ const caps=tpl.data._caps||[];const rec=mem.docs["tpl-"+id];tpl.imgs=((rec&&rec.files)||[]).map((f,i)=>({name:f.name,type:f.type,blob:f.blob,cap:caps[i]||"",url:URL.createObjectURL(f.blob)}));
+ T.fields.forEach(f=>{if((f.type==="table")&&!(tpl.data[f.k]||[]).length)tpl.data[f.k]=[{}];if(f.type==="people"&&!(tpl.data[f.k]||[]).length)tpl.data[f.k]=[{}]});
+ $("tplT").textContent="Modelo: "+T.t;$("tplNote").innerHTML=`${ic("info")}<div>${T.note?esc(T.note)+"<br>":""}<b>Preencha aqui</b> e clique em <b>Gerar PDF e anexar</b>, ou <b>baixe o Word</b>, complete no Word ou Google Docs (inclusive com imagens), salve em PDF e use <b>Importar preenchido</b>.</div>`;
+ $("tplOrig").classList.toggle("hide",!T.orig);renderTpl();$("tplModal").classList.add("on")}
+function closeTpl(){$("tplModal").classList.remove("on");tpl.imgs.forEach(i=>URL.revokeObjectURL(i.url));tpl.id=null}
+function renderTpl(){const T=TPL[tpl.id],d=tpl.data;
+ const fh=T.fields.map(f=>{const v=d[f.k];
+  if(f.type==="table")return `<div class="f c12"><span class="lbl">${esc(f.l)}</span><div class="tt"><table class="tpl-t"><thead><tr>${f.cols.map(c=>`<th>${esc(c[1])}</th>`).join("")}<th></th></tr></thead><tbody>${v.map((r,ri)=>`<tr>${f.cols.map(c=>`<td><input data-tk="${f.k}" data-r="${ri}" data-c="${c[0]}" value="${esc(r[c[0]]||"")}"></td>`).join("")}<td><button class="tpl-rm" title="Remover linha" data-trm="${f.k}" data-r="${ri}">${ic("x","sm")}</button></td></tr>`).join("")}</tbody></table></div><button class="btn sm soft c-pink" data-tadd="${f.k}" style="margin-top:8px">${ic("plus","sm")}Linha</button></div>`;
+  if(f.type==="people")return `<div class="f c12"><span class="lbl">${esc(f.l)}</span>${v.map((r,ri)=>`<div class="tpl-p"><div class="grid"><div class="f c6"><label>Nome</label><input data-tk="${f.k}" data-r="${ri}" data-c="nome" value="${esc(r.nome||"")}"></div><div class="f c6"><label>Função</label><input data-tk="${f.k}" data-r="${ri}" data-c="funcao" value="${esc(r.funcao||"")}"></div><div class="f c12"><label>Mini currículo</label><textarea data-tk="${f.k}" data-r="${ri}" data-c="texto" style="min-height:80px" placeholder="Formação, tempo de carreira, grupos e principais trabalhos">${esc(r.texto||"")}</textarea></div></div><button class="tpl-rm" title="Remover pessoa" data-trm="${f.k}" data-r="${ri}">${ic("x","sm")}</button></div>`).join("")}<button class="btn sm soft c-pink" data-tadd="${f.k}">${ic("plus","sm")}Pessoa</button></div>`;
+  const inp=f.type==="area"?`<textarea data-k="${f.k}" style="min-height:${(f.rows||4)*22+20}px" placeholder="${esc(f.ph||"")}">${esc(v)}</textarea>`:`<input data-k="${f.k}" ${f.type==="date"?'type="date"':""} value="${esc(v)}" placeholder="${esc(f.ph||"")}">`;
+  return `<div class="f ${f.type==="area"||!f.half?"c12":"c6"}"><label>${esc(f.l)}</label>${inp}</div>`}).join("");
+ const im=T.imgs?`<div class="f c12"><span class="lbl">${esc(T.imgs.l)} <span class="opt">(${tpl.imgs.length}/${T.imgs.max})</span></span><div class="tpl-imgs">${tpl.imgs.map((m,i)=>`<div class="tpl-img"><img src="${m.url}" alt=""><button class="tpl-rm" data-irm="${i}" title="Remover imagem">${ic("x","sm")}</button>${T.imgs.cap?`<input data-cap="${i}" value="${esc(m.cap)}" placeholder="${esc(T.imgs.ph||"Legenda")}">`:""}</div>`).join("")}${tpl.imgs.length<T.imgs.max?`<label class="tpl-add">${ic("plus")}<span>Adicionar imagens</span><input type="file" accept="image/*" multiple id="tplImgIn"></label>`:""}</div></div>`:"";
+ $("tplBody").innerHTML=`<div class="grid">${fh}${im}</div>`;
+ const ii=$("tplImgIn");if(ii)ii.onchange=e=>{tplAddImgs([...e.target.files]);e.target.value=""}}
+let tplT;function tplSave(imgs){clearTimeout(tplT);const id=tpl.id;const data={...tpl.data,_caps:tpl.imgs.map(i=>i.cap)};const files=imgs?tpl.imgs.map(({name,type,blob})=>({name,type,blob})):null;
+ tplT=setTimeout(async()=>{mem.meta.tpl=mem.meta.tpl||{};mem.meta.tpl[id]=data;try{await put("meta","main",mem.meta)}catch(e){}if(files){try{if(files.length)await put("docs","tpl-"+id,{files});else await del("docs","tpl-"+id)}catch(e){toast("Imagens grandes demais para salvar; ficam só nesta sessão")}}markSaved()},imgs?0:500)}
+function tplAddImgs(fs){const T=TPL[tpl.id];fs=fs.filter(f=>/^image\//.test(f.type));const room=T.imgs.max-tpl.imgs.length;if(fs.length>room)toast(`Máximo de ${T.imgs.max} imagens`);fs.slice(0,room).forEach(f=>tpl.imgs.push({name:f.name,type:f.type,blob:f.slice(0,f.size,f.type),cap:"",url:URL.createObjectURL(f)}));renderTpl();tplSave(true)}
+$("tplBody").addEventListener("input",e=>{const t=e.target;if(t.dataset.k){tpl.data[t.dataset.k]=t.value}else if(t.dataset.tk){tpl.data[t.dataset.tk][+t.dataset.r][t.dataset.c]=t.value}else if(t.dataset.cap){tpl.imgs[+t.dataset.cap].cap=t.value}else return;setSaving();tplSave()});
+$("tplBody").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;e.preventDefault();
+ if(b.dataset.tadd){tpl.data[b.dataset.tadd].push({});renderTpl();tplSave()}
+ else if(b.dataset.trm){const a=tpl.data[b.dataset.trm];a.splice(+b.dataset.r,1);if(!a.length)a.push({});renderTpl();tplSave()}
+ else if(b.dataset.irm){const[m]=tpl.imgs.splice(+b.dataset.irm,1);URL.revokeObjectURL(m.url);renderTpl();tplSave(true)}});
+const tb=$("tplBody");tb.ondragover=e=>{if(TPL[tpl.id]&&TPL[tpl.id].imgs){e.preventDefault()}};tb.ondrop=e=>{if(!TPL[tpl.id]||!TPL[tpl.id].imgs)return;e.preventDefault();tplAddImgs([...e.dataTransfer.files])};
+$("tplClose").onclick=closeTpl;$("tplModal").addEventListener("mousedown",e=>{if(e.target.id==="tplModal")closeTpl()});
+$("tplReset").onclick=async()=>{if(!await confirmBox("Recomeçar o modelo?","Os textos voltam a ser os de Meus dados. As imagens continuam.","Recomeçar"))return;const id=tpl.id;tpl.data=tplPrefill(id);TPL[id].fields.forEach(f=>{if((f.type==="table"||f.type==="people")&&!tpl.data[f.k].length)tpl.data[f.k]=[{}]});renderTpl();tplSave();$("tplModal").classList.add("on")};
+
+// imagens → JPEG reduzido (serve para Word e PDF)
+async function tplJpeg(blob,max=2000){const url=URL.createObjectURL(blob);try{const im=await new Promise((res,rej)=>{const i=new Image();i.onload=()=>res(i);i.onerror=()=>rej(new Error("imagem inválida"));i.src=url});
+ const k=Math.min(1,max/Math.max(im.naturalWidth,im.naturalHeight));const c=document.createElement("canvas");c.width=Math.round(im.naturalWidth*k);c.height=Math.round(im.naturalHeight*k);const x=c.getContext("2d");x.fillStyle="#fff";x.fillRect(0,0,c.width,c.height);x.drawImage(im,0,0,c.width,c.height);
+ const durl=c.toDataURL("image/jpeg",0.88);const bin=atob(durl.split(",")[1]);const u=new Uint8Array(bin.length);for(let i=0;i<bin.length;i++)u[i]=bin.charCodeAt(i);return{durl,bytes:u,w:c.width,h:c.height}}finally{URL.revokeObjectURL(url)}}
+const brDate=s=>s&&/^\d{4}-\d{2}-\d{2}$/.test(s)?fmtDate(s):s||"";
+const brDateLong=s=>{if(!s)return"";const d=new Date(s+"T12:00");return isNaN(d)?s:d.toLocaleDateString("pt-BR",{day:"numeric",month:"long",year:"numeric"})};
+// modelo do documento em blocos (o mesmo para Word e PDF); blank=true mostra campos vazios como "[preencha]"
+async function tplBlocks(id,blank){const T=TPL[id],d=tpl.data,B=[];const has=v=>String(v||"").trim()!=="";
+ if(id==="cache"){const u=(v,n=24)=>has(v)?v:"_".repeat(n);
+  B.push({title:"RECIBO"});if(has(d.valor)||blank)B.push({right:`Valor: R$ ${u(d.valor,14)}`});
+  B.push({body:`Recebi de ${u(d.contratante,40)}, inscrito(a) no CPF/CNPJ sob o nº ${u(d.docContr,20)}, a importância de R$ ${u(d.valor,14)} (${u(d.extenso,40)}), referente ao cachê pela apresentação artística de ${u(d.atracao,30)} no evento ${u(d.evento,30)}, realizada em ${has(d.data)?brDate(d.data):"____/____/______"}, no local ${u(d.local,30)}.`});
+  B.push({body:"Por ser verdade, firmo o presente recibo, dando plena e geral quitação do valor acima."});
+  B.push({right:`${u(d.cidade,16)}, ${has(d.emissao)?brDateLong(d.emissao):"____ de ______________ de ______"}.`});
+  B.push({sign:[d.receb||"Nome de quem recebeu",has(d.docReceb)?"CPF/CNPJ: "+d.docReceb:"CPF/CNPJ:"]});return B}
+ B.push({title:T.t.toUpperCase()});if(has(d.atracao)||blank)B.push({sub:d.atracao||"",ph:"Nome da atração"});
+ for(const f of T.fields){if(f.k==="atracao")continue;const v=d[f.k];
+  if(f.type==="table"){const rows=(v||[]).filter(r=>f.cols.some(c=>has(r[c[0]])));if(!rows.length&&!blank)continue;   B.push({label:f.l});B.push({table:{cols:f.cols,rows:[...rows.map(r=>f.cols.map(c=>r[c[0]]||"")),...Array.from({length:blank?Math.max(2,6-rows.length):0},()=>f.cols.map(()=>""))]}});continue}
+  if(f.type==="people"){const ps=(v||[]).filter(r=>has(r.nome)||has(r.texto));if(!ps.length&&!blank)continue;(ps.length?ps:[{}]).forEach(r=>{B.push({person:[r.nome||"",r.funcao||""],ph:"Nome – função"});B.push({text:r.texto||"",ph:"Mini currículo: formação, tempo de carreira, grupos e principais trabalhos"})});if(blank)B.push({hint:"Copie o bloco acima para cada integrante ou técnico."});continue}
+  if(!has(v)&&!blank)continue;B.push({label:f.l});B.push({text:f.type==="date"?brDate(v):v||"",ph:f.ph||"Preencha aqui"})}
+ if(T.imgs){if(tpl.imgs.length||blank)B.push({label:T.imgs.l});for(const m of tpl.imgs){try{B.push({img:await tplJpeg(m.blob),cap:m.cap,h:T.imgs.h})}catch(e){}}
+  if(blank)B.push({hint:"Para incluir mais imagens no Word: Inserir > Imagens. Escreva a legenda logo abaixo de cada uma."});
+  if(id==="fotos"&&has(d.credito))B.push({hint:"Fotos: "+d.credito})}
+ return B}
+
+// ---- PDF (jsPDF) ----
+async function tplPdf(id){const {jsPDF}=window.jspdf;const doc=new jsPDF({unit:"mm",format:"a4"});const B=await tplBlocks(id,false);const M=20,TW=170,BOT=282;let y=22;
+ const nl=h=>{if(y+h>BOT){doc.addPage();y=20}};const font=(s,sz,c)=>{doc.setFont("helvetica",s);doc.setFontSize(sz);doc.setTextColor(...(c||[25,25,25]))};
+ const lines=(t,sz,st,lh,opt={})=>{font(st,sz,opt.c);doc.splitTextToSize(String(t),opt.w||TW).forEach(l=>{nl(lh);doc.text(l,opt.x||M,y,opt.al?{align:opt.al}:undefined);y+=lh})};
+ for(const b of B){
+  if(b.title){font("bold",16,[90,40,140]);doc.text(b.title,id==="cache"?105:M,y,id==="cache"?{align:"center"}:undefined);y+=id==="cache"?14:8}
+  else if(b.sub!=null){lines(b.sub,13,"bold",6.5);y+=1;doc.setDrawColor(200,180,230);doc.setLineWidth(.4);doc.line(M,y,M+TW,y);y+=7}
+  else if(b.label){nl(14);font("bold",10.5,[90,40,140]);doc.text(b.label.toUpperCase(),M,y);y+=6}
+  else if(b.text!=null){lines(b.text,11,"normal",5.4);y+=5}
+  else if(b.person){nl(14);lines(b.person.filter(Boolean).join(" – "),11.5,"bold",6)}
+  else if(b.hint){lines(b.hint,9.5,"italic",5,{c:[110,110,110]});y+=3}
+  else if(b.body){lines(b.body,12,"normal",7.2);y+=4}
+  else if(b.right){y+=2;lines(b.right,12,"normal",7,{x:M+TW,al:"right"});y+=6}
+  else if(b.sign){y+=18;nl(20);doc.setDrawColor(40);doc.setLineWidth(.3);doc.line(55,y,155,y);y+=5;font("bold",11);doc.text(b.sign[0],105,y,{align:"center"});y+=5;font("normal",10);doc.text(b.sign[1],105,y,{align:"center"});y+=8}
+  else if(b.table){const{cols,rows}=b.table;const tot=cols.reduce((a,c)=>a+c[2],0);const ws=cols.map(c=>TW*c[2]/tot);
+   const row=(cells,head)=>{font(head?"bold":"normal",head?9.5:10,head?[60,30,110]:null);const ls=cells.map((c,i)=>doc.splitTextToSize(String(c||""),ws[i]-4));const h=Math.max(1,...ls.map(l=>l.length))*4.6+3.6;nl(h);let x=M;
+    cells.forEach((c,i)=>{if(head){doc.setFillColor(243,236,252);doc.rect(x,y,ws[i],h,"F")}doc.setDrawColor(190);doc.setLineWidth(.2);doc.rect(x,y,ws[i],h);ls[i].forEach((l,j)=>doc.text(l,x+2,y+5+j*4.6));x+=ws[i]});y+=h};
+   row(cols.map(c=>c[1]),true);rows.forEach(r=>row(r));y+=6}
+  else if(b.img){const mh=b.h||120;let w=TW,h=w*b.img.h/b.img.w;if(h>mh){h=mh;w=h*b.img.w/b.img.h}nl(h+(b.cap?8:4));doc.addImage(b.img.durl,"JPEG",M+(TW-w)/2,y,w,h);y+=h+2;if(b.cap){font("italic",9.5,[90,90,90]);doc.text(doc.splitTextToSize(b.cap,TW),105,y+3,{align:"center"});y+=8}else y+=4}}
+ return doc.output("blob")}
+
+// ---- Word (.docx gerado na hora, editável) ----
+const XE=s=>String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+const wr=(t,o={})=>String(t).split("\n").map((s,i)=>`<w:r><w:rPr>${o.b?"<w:b/>":""}${o.i?"<w:i/>":""}${o.c?`<w:color w:val="${o.c}"/>`:""}${o.sz?`<w:sz w:val="${o.sz}"/>`:""}</w:rPr>${i?"<w:br/>":""}<w:t xml:space="preserve">${XE(s)}</w:t></w:r>`).join("");
+const wp=(runs,o={})=>`<w:p><w:pPr>${o.keep?"<w:keepNext/>":""}${o.bd?'<w:pBdr><w:bottom w:val="single" w:sz="6" w:space="4" w:color="C8B4E6"/></w:pBdr>':""}<w:spacing w:before="${o.bf||0}" w:after="${o.af==null?120:o.af}" w:line="${o.ln||276}" w:lineRule="auto"/>${o.jc?`<w:jc w:val="${o.jc}"/>`:""}</w:pPr>${runs}</w:p>`;
+const wph=(t,ph,o={})=>String(t||"").trim()?wr(t,o):wr(`[${ph}]`,{...o,i:1,c:"8A8A8A"});
+function wTable(cols,rows){const tot=cols.reduce((a,c)=>a+c[2],0);const W=9638;const ws=cols.map(c=>Math.round(W*c[2]/tot));const bd=["top","left","bottom","right","insideH","insideV"].map(k=>`<w:${k} w:val="single" w:sz="4" w:color="A0A0A0"/>`).join("");
+ const cell=(t,i,h)=>`<w:tc><w:tcPr><w:tcW w:w="${ws[i]}" w:type="dxa"/>${h?'<w:shd w:val="clear" w:color="auto" w:fill="F3ECFC"/>':""}</w:tcPr>${wp(wr(t,h?{b:1,sz:19,c:"3C1E6E"}:{sz:20}),{af:0})}</w:tc>`;
+ return `<w:tbl><w:tblPr><w:tblW w:w="${W}" w:type="dxa"/><w:tblBorders>${bd}</w:tblBorders><w:tblCellMar><w:top w:w="40" w:type="dxa"/><w:left w:w="90" w:type="dxa"/><w:bottom w:w="40" w:type="dxa"/><w:right w:w="90" w:type="dxa"/></w:tblCellMar></w:tblPr><w:tblGrid>${ws.map(w=>`<w:gridCol w:w="${w}"/>`).join("")}</w:tblGrid><w:tr><w:trPr><w:tblHeader/></w:trPr>${cols.map((c,i)=>cell(c[1],i,1)).join("")}</w:tr>${rows.map(r=>`<w:tr>${r.map((t,i)=>cell(t,i)).join("")}</w:tr>`).join("")}</w:tbl>${wp("",{af:120})}`}
+async function tplDocx(id){const B=await tplBlocks(id,true);const media=[];let n=0;const body=[];const P_=(v,o)=>body.push(wp(v,o));
+ for(const b of B){
+  if(b.title)P_(wr(b.title,{b:1,sz:32,c:"5A288C"}),{af:id==="cache"?360:80,jc:id==="cache"?"center":null});
+  else if(b.sub!=null)P_(wph(b.sub,b.ph,{b:1,sz:26}),{bd:1,af:240});
+  else if(b.label)P_(wr(b.label.toUpperCase(),{b:1,sz:20,c:"5A288C"}),{bf:120,af:60,keep:1});
+  else if(b.text!=null)P_(wph(b.text,b.ph),{af:160});
+  else if(b.person)P_(String(b.person.join("")).trim()?wr(b.person.filter(Boolean).join(" – "),{b:1,sz:23}):wr(`[${b.ph}]`,{b:1,i:1,c:"8A8A8A"}),{bf:160,af:60,keep:1});
+  else if(b.hint)P_(wr(b.hint,{i:1,sz:18,c:"7A7A7A"}),{af:160});
+  else if(b.body)P_(wr(b.body,{sz:24}),{ln:360,af:200});
+  else if(b.right)P_(wr(b.right,{sz:24}),{jc:"right",af:240});
+  else if(b.sign){P_("",{af:600});P_(wr("_______________________________________"),{jc:"center",af:0});P_(wr(b.sign[0],{b:1}),{jc:"center",af:0});P_(wr(b.sign[1],{sz:20}),{jc:"center"})}
+  else if(b.table)body.push(wTable(b.table.cols,b.table.rows));
+  else if(b.img){n++;media.push(b.img.bytes);const maxW=6120000,maxH=Math.round((b.h||120)/170*maxW);let cx=maxW,cy=Math.round(cx*b.img.h/b.img.w);if(cy>maxH){cy=maxH;cx=Math.round(cy*b.img.w/b.img.h)}
+   P_(`<w:r><w:drawing><wp:inline distT="0" distB="0" distL="0" distR="0"><wp:extent cx="${cx}" cy="${cy}"/><wp:docPr id="${n}" name="Imagem ${n}"/><wp:cNvGraphicFramePr><a:graphicFrameLocks noChangeAspect="1"/></wp:cNvGraphicFramePr><a:graphic><a:graphicData uri="http://schemas.openxmlformats.org/drawingml/2006/picture"><pic:pic><pic:nvPicPr><pic:cNvPr id="${n}" name="imagem${n}.jpeg"/><pic:cNvPicPr/></pic:nvPicPr><pic:blipFill><a:blip r:embed="rIdImg${n}"/><a:stretch><a:fillRect/></a:stretch></pic:blipFill><pic:spPr><a:xfrm><a:off x="0" y="0"/><a:ext cx="${cx}" cy="${cy}"/></a:xfrm><a:prstGeom prst="rect"><a:avLst/></a:prstGeom></pic:spPr></pic:pic></a:graphicData></a:graphic></wp:inline></w:drawing></w:r>`,{jc:"center",af:b.cap?40:200,keep:!!b.cap});
+   if(b.cap)P_(wr(b.cap,{i:1,sz:18,c:"5A5A5A"}),{jc:"center",af:200});else if(TPL[id].imgs&&TPL[id].imgs.cap)P_(wr("[Legenda]",{i:1,sz:18,c:"8A8A8A"}),{jc:"center",af:200})}}
+ if(TPL[id].imgs&&!n)P_(wr("[Insira a imagem aqui: Inserir > Imagens]",{i:1,c:"8A8A8A"}),{jc:"center",bf:200,af:200});
+ const z=new JSZip();
+ z.file("[Content_Types].xml",`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Default Extension="jpeg" ContentType="image/jpeg"/><Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/><Override PartName="/word/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.styles+xml"/></Types>`);
+ z.file("_rels/.rels",`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/></Relationships>`);
+ z.file("word/_rels/document.xml.rels",`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rIdSt" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/>${media.map((_,i)=>`<Relationship Id="rIdImg${i+1}" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/image" Target="media/imagem${i+1}.jpeg"/>`).join("")}</Relationships>`);
+ z.file("word/styles.xml",`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:styles xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:docDefaults><w:rPrDefault><w:rPr><w:rFonts w:ascii="Arial" w:hAnsi="Arial" w:eastAsia="Arial" w:cs="Arial"/><w:sz w:val="22"/><w:szCs w:val="22"/><w:lang w:val="pt-BR"/></w:rPr></w:rPrDefault><w:pPrDefault><w:pPr><w:spacing w:after="120" w:line="276" w:lineRule="auto"/></w:pPr></w:pPrDefault></w:docDefaults><w:style w:type="paragraph" w:default="1" w:styleId="Normal"><w:name w:val="Normal"/><w:qFormat/></w:style></w:styles>`);
+ media.forEach((u,i)=>z.file(`word/media/imagem${i+1}.jpeg`,u));
+ z.file("word/document.xml",`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing" xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main" xmlns:pic="http://schemas.openxmlformats.org/drawingml/2006/picture"><w:body>${body.join("")}<w:sectPr><w:pgSz w:w="11906" w:h="16838"/><w:pgMar w:top="1134" w:right="1134" w:bottom="1134" w:left="1134" w:header="567" w:footer="567" w:gutter="0"/></w:sectPr></w:body></w:document>`);
+ return z.generateAsync({type:"blob",mimeType:"application/vnd.openxmlformats-officedocument.wordprocessingml.document"})}
+const tplName=id=>`${TPL[id].file}-${slug(tpl.data.atracao||P().atracao)||"PalcoPronto"}`;
+async function tplRun(btn,fn){const l=btn.innerHTML;btn.disabled=true;btn.textContent="Gerando…";try{await fn()}catch(e){toast("Erro: "+e.message)}btn.disabled=false;btn.innerHTML=l}
+$("tplWord").onclick=e=>tplRun(e.currentTarget,async()=>saveFile(tplName(tpl.id)+".docx",await tplDocx(tpl.id)));
+$("tplPdf").onclick=e=>tplRun(e.currentTarget,async()=>saveFile(tplName(tpl.id)+".pdf",await tplPdf(tpl.id)));
+$("tplAttach").onclick=e=>tplRun(e.currentTarget,async()=>{const id=tpl.id;const blob=await tplPdf(id);await addFiles(id,[new File([blob],tplName(id)+".pdf",{type:"application/pdf"})]);closeTpl()});
+$("tplImp").onchange=async e=>{const fs=[...e.target.files];e.target.value="";if(!fs.length)return;const id=tpl.id;closeTpl();await addFiles(id,fs)};
+$("tplOrig").onclick=async()=>{if(!tpl.imgs.length){toast("Adicione as fotos primeiro");return}const id=tpl.id;const fs=tpl.imgs.map(m=>new File([m.blob],m.name,{type:m.type}));closeTpl();await addFiles(id,fs)};
 
 // ---------- FORMULÁRIOS ----------
 async function renderGerarDocs(){const rows=await Promise.all(DOCDEFS.map(async d=>({d,m:await missing(d)})));
