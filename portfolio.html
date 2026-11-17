@@ -1603,6 +1603,8 @@ function hexToB62(h){let n=BigInt('0x1'+h),s='';while(n>0n){s=B62[Number(n%62n)]
 function b62ToHex(t){let n=0n;for(const ch of String(t)){const i=B62.indexOf(ch);if(i<0)return '';n=n*62n+BigInt(i);}return n.toString(16).slice(1);}
 const VIEW_GIST=(QS.get('p')||(QS.get('c')?b62ToHex(QS.get('c').replace(/[^0-9A-Za-z]/g,'')):'')||'').replace(/[^\w]/g,''),VIEW_OWNER=(QS.get('u')||'').replace(/[^\w-]/g,''),VIEW_LOCAL=QS.get('ver')==='local';
 const VIEWER=!!(VIEW_GIST||VIEW_LOCAL);
+const PP_EMP=(QS.get('emp')||'').replace(/[^\w-]/g,''),PP_HEADLESS=QS.get('headless')==='1';
+const PP_DB=PP_EMP&&PP_EMP!=='main'?'portfolio-eventos--'+PP_EMP:'portfolio-eventos',PP_BC=PP_EMP&&PP_EMP!=='main'?'portfolio-live--'+PP_EMP:'portfolio-live';
 if(VIEWER)document.documentElement.classList.add('is-viewer');
 /* ================= utilitários ================= */
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
@@ -1718,7 +1720,7 @@ const store={db:null,mem:{},persistent:false,
   STORES.forEach(s=>this.mem[s]=new Map());
   try{
    this.db=await new Promise((res,rej)=>{
-    const rq=indexedDB.open('portfolio-eventos',5);
+    const rq=indexedDB.open(PP_DB,5);
     rq.onupgradeneeded=()=>{const d=rq.result;STORES.forEach(s=>{if(!d.objectStoreNames.contains(s))d.createObjectStore(s,{keyPath:s==='kv'?'key':'id'})})};
     rq.onsuccess=()=>res(rq.result);rq.onerror=()=>rej(rq.error);rq.onblocked=()=>rej(new Error('bloqueado'));
    });
@@ -4414,7 +4416,7 @@ const Cloud={
   this.device=(await getLocal('device'))||'';if(!this.device){this.device=uid();await putLocal('device',this.device);}
   this.log=(await getLocal('actlog'))||[];
   await this.migrateStamps();
-  try{this.bc=new BroadcastChannel('portfolio-live');}catch(e){this.bc=null;}
+  try{this.bc=new BroadcastChannel(PP_BC);}catch(e){this.bc=null;}
   changeListeners.push(s=>this.onChange(s));
  },
  async reloadCfg(){this.gh=(await getLocal('gh'))||null;this.sync=(await getLocal('syncCfg'))||null;this.pub=(await getLocal('pubCfg'))||null;this.shortTok=(await getLocal('shortTok'))||{};},
@@ -5045,7 +5047,7 @@ async function startViewer(){
    const sync=async()=>{V.snap=Object.assign(buildPublicSnapshot(),{at:null});viewerApply(V.snap);await preloadFonts([state.settings.template]);};
    await sync();renderWeb(false);
    const upd=debounce(async()=>{const ph=new Set(photos.keys());await loadAll();await sync();renderWeb(true);},120);
-   try{const bc=new BroadcastChannel('portfolio-live');bc.onmessage=()=>upd();}catch(e){}
+   try{const bc=new BroadcastChannel(PP_BC);bc.onmessage=()=>upd();}catch(e){}
    window.addEventListener('focus',upd);
   }else{
    await viewerFetchRemote(true);
@@ -5644,11 +5646,11 @@ FORMS.coach={nome:'item',fields:[]};
  try{if(navigator.storage&&navigator.storage.persist)navigator.storage.persist();}catch(e){}
  if(!store.persistent)$('#banner').innerHTML='<div class="banner">Este navegador bloqueou o armazenamento local. Você pode editar, mas os dados se perdem ao fechar a página. Exporte um backup antes de sair.</div>';
  setStatus(store.persistent?'Tudo salvo neste dispositivo':'Sem armazenamento local');
- await Cloud.init();
+ if(!PP_HEADLESS)await Cloud.init();
  applyMenu();
  go(state.profile.nome||state.events.length?state.tab:'inicio');
  autofixSignatureBg();
- Cloud.start();
+ if(!PP_HEADLESS)Cloud.start();
 })();
 
 
@@ -5657,6 +5659,7 @@ window.palcoBridge={
  data:()=>clone({profile:state.profile,release:state.release}),
  apply:p=>{if(p.profile)Object.assign(state.profile,p.profile);if(p.release)Object.assign(state.release,p.release);touch();try{go(state.tab);}catch(e){}},
  go:t=>{try{go(t);}catch(e){}},
+ setLogo:async durl=>{const id=await addPhotoFromDataURL(durl,{maxW:640});state.profile.logo=id;touch();try{rerender();}catch(e){}},
  flush:()=>persistKV(),
  backupData:()=>{ return {app:'portfolio-eventos',versao:5,exportadoEm:new Date().toISOString(),profile:state.profile,settings:state.settings,events:state.events,services:state.services,testimonials:state.testimonials,clients:state.clients,facts:state.facts,release:state.release,apres:state.apres,packages:state.packages,videos:state.videos,report:state.report,decl:state.decl,coach:state.coach,photos:[...photos.values()]};},
  restoreData:async d=>{if(!d||d.app!=='portfolio-eventos')throw new Error('backup do Portfólio inválido');
@@ -5666,7 +5669,8 @@ window.palcoBridge={
   photos.clear();(d.photos||[]).forEach(p=>photos.set(p.id,p));normalizeLoaded();await persistAll();
  try{go('inicio');}catch(e){}},
  /* fotos vindas do Palco Pronto: um evento por grupo, espelhando o que está lá (fotos adicionadas aqui à mão são mantidas) */
- syncPhotos:async groups=>{let add=0,rem=0;
+ syncPhotos:async(groups,scope)=>{let add=0,rem=0;
+  if(scope){const alien=state.events.filter(e=>e.palco&&!String(e.palco).startsWith(scope+':'));for(const e of alien){state.events=state.events.filter(x=>x.id!==e.id);await store.del('events',e.id);rem+=(e.fotos||[]).length;}}
   for(const g of groups){let ev=state.events.find(e=>e.palco===g.key);
    if(!ev){if(!g.items.length)continue;ev={id:uid(),ordem:nextOrd(state.events),incluir:true,titulo:g.titulo,tipo:g.tipo||'Show ou festival',data:'',local:'',cidade:g.cidade||'',convidados:'',cliente:'',funcao:'',descricao:g.descricao||'',fotos:[],capa:null,videos:[],palco:g.key,palcoMap:{}};state.events.push(ev);}
    const old=ev.palcoMap||{};const map={};const pids=[];
