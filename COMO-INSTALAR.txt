@@ -1,0 +1,29 @@
+PALCO PRONTO – CREDENCIAMENTOS CULTURAIS
+========================================
+
+OPÇÃO 1 – USAR JÁ, SEM INSTALAR
+  Dê dois cliques no arquivo index.html. O sistema abre no navegador
+  e funciona até sem internet. Para achar fácil depois, crie um atalho
+  do index.html na área de trabalho.
+
+OPÇÃO 2 – INSTALAR COMO PROGRAMA (ícone e janela próprios)
+  O navegador só instala sistemas abertos por um endereço https.
+  O jeito mais simples e gratuito:
+   1. Acesse https://app.netlify.com/drop
+   2. Arraste ESTA PASTA inteira para a página.
+   3. Crie uma conta grátis quando pedir, para o endereço não expirar.
+   4. Abra o endereço gerado (algo como https://nome.netlify.app)
+      no Google Chrome ou no Microsoft Edge.
+   5. Clique no ícone de instalar, no canto direito da barra de endereço,
+      ou abra o menu ⋮ e escolha "Instalar Palco Pronto".
+  Pronto: o sistema aparece na área de trabalho e no menu Iniciar,
+  e funciona sem internet.
+
+LEVAR SEUS DADOS
+  Seus dados ficam guardados no navegador onde você os digitou.
+  Na versão antiga: Backup e instalação → Baixar backup.
+  Na versão nova:   Backup e instalação → Restaurar backup.
+
+IMPORTANTE
+  Os dados ficam só no seu computador; nada é enviado para a internet.
+  Faça backups de vez em quando.
