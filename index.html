@@ -354,6 +354,13 @@ ol.howto{margin:8px 0 0;padding-left:20px;color:var(--ink-2)}ol.howto li{margin:
 .prof-bar{align-items:center;flex-wrap:wrap}.prof-bar .row{margin-left:auto}
 .rsel{width:auto;padding:5px 28px 5px 9px;font-size:12.5px;border-radius:9px}
 .ritem.past{opacity:.72}
+.ppbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:12px}.ppbar .tx{flex:1;min-width:240px;font-size:13.5px;color:var(--muted)}
+#ppWrap{position:relative;border:1px solid var(--line);border-radius:18px;overflow:hidden;background:var(--surface);height:calc(100vh - 190px);min-height:560px}
+#ppFrame{width:100%;height:100%;border:0;display:block;background:#fff}
+#ppLoading{position:absolute;inset:0;display:grid;place-items:center;color:var(--muted);font-weight:600;background:var(--surface)}
+body.pp-full #ppWrap{position:fixed;inset:0;z-index:7000;border-radius:0;height:100vh;min-height:0;border:0}
+body.pp-full #ppFull{position:fixed;right:14px;bottom:14px;z-index:7001;box-shadow:var(--shadow-lg)}
+@media (max-width:860px){#ppWrap{height:calc(100dvh - 230px);min-height:480px}}
 </style>
 </head>
 <body>
@@ -368,6 +375,8 @@ ol.howto{margin:8px 0 0;padding-left:20px;color:var(--ink-2)}ol.howto li{margin:
 <a href="#documentos" data-v="documentos" class="c-amber"><span class="t"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6.5A1.5 1.5 0 0 1 4.5 5H9l2 2.5h8.5A1.5 1.5 0 0 1 21 9v9.5a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 18.5z"/></svg></span>Documentos<span class="dot" data-dot="documentos"></span></a>
 <a href="#formularios" data-v="formularios" class="c-pink"><span class="t"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H6.5A1.5 1.5 0 0 0 5 4.5v15A1.5 1.5 0 0 0 6.5 21h11a1.5 1.5 0 0 0 1.5-1.5V8z"/><path d="M14 3v5h5"/><path d="M8.5 13h7M8.5 16.5h5"/></svg></span>Formulários<span class="dot" data-dot="formularios"></span></a>
 <a href="#enviar" data-v="enviar" class="c-green"><span class="t"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 3 10 14"/><path d="M21 3 14.5 21l-4.5-7-7-4.5z"/></svg></span>Enviar inscrição<span class="dot" data-dot="enviar"></span></a>
+<div class="nav-g">Montagem</div>
+<a href="#portfolio" data-v="portfolio" class="c-violet"><span class="t"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 0 0 0 18c1 0 1.5-.8 1.5-1.6 0-1.3-1.1-1.4-1.1-2.6 0-.9.7-1.6 1.6-1.6H16a5 5 0 0 0 5-5c0-4-4-7.2-9-7.2z"/><circle cx="7.5" cy="11" r="1.2"/><circle cx="10" cy="7" r="1.2"/><circle cx="14.5" cy="7" r="1.2"/></svg></span>Portfólio Pro</a>
 <div class="nav-g">Gestão</div>
 <a href="#orgaos" data-v="orgaos" class="c-teal"><span class="t"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 21V5a1 1 0 0 1 1-1h9a1 1 0 0 1 1 1v16"/><path d="M15 9h4a1 1 0 0 1 1 1v11"/><path d="M8 8h3M8 12h3M8 16h3M3 21h18"/></svg></span>Órgãos e contatos<span class="cnt" data-cnt="orgaos">0</span></a>
 <a href="#editais" data-v="editais" class="c-orange"><span class="t"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M8 3v4M16 3v4M3.5 10h17"/><path d="M8 14h2M12 14h2M8 17h2"/></svg></span>Editais<span class="cnt new hide" data-new="radar" title="Novos no radar">0</span><span class="cnt" data-cnt="editais">0</span></a>
@@ -377,7 +386,7 @@ ol.howto{margin:8px 0 0;padding-left:20px;color:var(--ink-2)}ol.howto li{margin:
     <div class="side-foot">
       <div class="mini-prog"><div class="row1"><span>Credenciamento FMAC</span><span id="sideProgTxt">0%</span></div><div class="bar"><div id="sideProg" style="width:0"></div></div></div>
       <button class="btn ghost sm hide" id="installSide"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>Instalar no computador</button>
-      <div class="ver"><span>Versão 2.3</span><span>17/11/2026</span></div>
+      <div class="ver"><span>Versão 2.4</span><span>17/11/2026</span></div>
     </div>
   </aside>
   <div class="main">
@@ -592,6 +601,13 @@ ol.howto{margin:8px 0 0;padding-left:20px;color:var(--ink-2)}ol.howto li{margin:
         <div class="orgs" id="orgList"></div>
       </section>
 
+      <section class="view" id="v-portfolio">
+        <div class="ppbar"><div class="tx">Monte <b>portfólio, release, relatório de apresentações e declarações</b> com visual profissional. Ao gerar um PDF aqui, você escolhe em qual documento da empresa ativa ele será anexado.</div>
+          <button class="btn sm soft c-blue" id="ppPush" title="Copia nome, atração, release, contatos e dados da empresa para o Portfólio Pro"><svg class="i sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>Meus dados → Portfólio</button>
+          <button class="btn sm soft c-violet" id="ppPull" title="Traz nome, marca, bio e contatos do Portfólio Pro para Meus dados">Portfólio → Meus dados</button>
+          <button class="btn sm" id="ppFull"><svg class="i sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M19 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h5"/></svg><span>Tela cheia</span></button></div>
+        <div id="ppWrap"><iframe id="ppFrame" title="Portfólio Pro" allow="clipboard-read; clipboard-write; fullscreen"></iframe><div id="ppLoading" class="hide">Abrindo o Portfólio Pro…</div></div>
+      </section>
       <section class="view" id="v-editais">
         <div class="card radar c-orange" id="radarCard">
           <div class="card-h"><div class="ic c-orange"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="M12 12 18.5 5.5"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/></svg></div><div><h2>Radar de editais <span class="live" id="radarLive"><i></i>Ao vivo</span></h2><p id="radarSub">Busca automática de editais culturais da FMAC, da SECULT-AL e das prefeituras de Alagoas, 3 vezes ao dia.</p></div>
@@ -637,6 +653,7 @@ ol.howto{margin:8px 0 0;padding-left:20px;color:var(--ink-2)}ol.howto li{margin:
   <button id="moreBtn"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="5" cy="12" r="1.3"/><circle cx="12" cy="12" r="1.3"/><circle cx="19" cy="12" r="1.3"/></svg>Mais</button>
 </nav>
 <div class="sheet-bg" id="sheet"><div class="sheet"><div class="grab"></div><nav class="nav" id="sheetNav">
+<a href="#portfolio" data-v="portfolio" class="c-violet"><span class="t"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 0 0 0 18c1 0 1.5-.8 1.5-1.6 0-1.3-1.1-1.4-1.1-2.6 0-.9.7-1.6 1.6-1.6H16a5 5 0 0 0 5-5c0-4-4-7.2-9-7.2z"/><circle cx="7.5" cy="11" r="1.2"/><circle cx="10" cy="7" r="1.2"/><circle cx="14.5" cy="7" r="1.2"/></svg></span>Portfólio Pro</a>
 <a href="#enviar" data-v="enviar" class="c-green"><span class="t"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 3 10 14"/><path d="M21 3 14.5 21l-4.5-7-7-4.5z"/></svg></span>Enviar inscrição</a>
 <a href="#orgaos" data-v="orgaos" class="c-teal"><span class="t"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 21V5a1 1 0 0 1 1-1h9a1 1 0 0 1 1 1v16"/><path d="M15 9h4a1 1 0 0 1 1 1v11"/><path d="M8 8h3M8 12h3M8 16h3M3 21h18"/></svg></span>Órgãos e contatos</a>
 <a href="#editais" data-v="editais" class="c-orange"><span class="t"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M8 3v4M16 3v4M3.5 10h17"/><path d="M8 14h2M12 14h2M8 17h2"/></svg></span>Editais</a>
@@ -653,6 +670,10 @@ ol.howto{margin:8px 0 0;padding-left:20px;color:var(--ink-2)}ol.howto li{margin:
   <div class="f"><label for="profNome">Nome para identificar</label><input id="profNome" placeholder="Ex.: Minha MEI, Produtora Sorriso"></div>
   <label class="imp-opt" id="profCopyL" style="margin-top:12px"><input type="checkbox" id="profCopy" checked><span>Copiar os dados artísticos de <b id="profFrom"></b><small>Atração, categoria, gêneros, integrantes, release, ficha técnica, links, redes e contatos. Dados da empresa, documentos e certidões não são copiados.</small></span></label>
   <div class="row" style="margin-top:16px"><button class="btn" id="profNo">Cancelar</button><button class="btn primary" id="profYes">Criar</button></div></div></div>
+<div class="modal-bg" id="ppRecv" style="z-index:8100"><div class="modal c-violet"><div class="mh"><span class="t"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="m21 11-8.5 8.5a5 5 0 0 1-7-7L14 4a3.5 3.5 0 0 1 5 5l-8.6 8.5a2 2 0 0 1-2.8-2.8L15.5 7"/></svg></span><h3>Anexar no Palco Pronto</h3><button class="btn sm ghost" id="ppRecvX" style="margin-left:auto" aria-label="Fechar"><svg class="i sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div><p id="ppRecvP"></p>
+  <div class="f"><label for="ppSlot">Anexar em</label><select id="ppSlot"></select></div>
+  <label class="imp-opt" style="margin-top:12px"><input type="checkbox" id="ppDl"><span>Também baixar o arquivo</span></label>
+  <div class="row" style="margin-top:16px"><button class="btn" id="ppRecvNo">Só baixar</button><button class="btn primary" id="ppRecvYes">Anexar</button></div></div></div>
 <div class="modal-bg" id="sigModal"><div class="modal" style="max-width:620px;max-height:calc(100vh - 32px);overflow:auto"><h3>Importar formulários assinados</h3><p style="margin-bottom:12px">Confira o que está dentro de cada arquivo. Os arquivos são anexados sem nenhuma alteração, para a assinatura continuar válida.</p>
   <div id="sigList" class="imp-list"></div>
   <label class="imp-opt"><input type="checkbox" id="sigReplace" checked><span>Substituir os anexos antigos desses formulários<small>Remove os PDFs anexados antes para os mesmos formulários, inclusive os que aparecem como "Conferir assinatura".</small></span></label>
@@ -1409,6 +1430,7 @@ const VIEWS={
  formularios:{el:"v-formularios",t:"Formulários",s:"Modelos oficiais preenchidos, em Word ou PDF",i:"file",c:"c-pink"},
  enviar:{el:"v-enviar",t:"Enviar inscrição",s:"Pacote, e-mail e registro do envio",i:"send",c:"c-green"},
  orgaos:{el:"v-orgaos",t:"Órgãos e contatos",s:"Prefeituras, fundações e contratantes com seus responsáveis",i:"building",c:"c-teal"},
+ portfolio:{el:"v-portfolio",t:"Portfólio Pro",s:"Portfólio, release, relatório e declarações conectados aos seus documentos",i:"palette",c:"c-violet"},
  editais:{el:"v-editais",t:"Editais",s:"Acompanhe prazos e situação de cada oportunidade",i:"cal",c:"c-orange"},
  ajustes:{el:"v-ajustes",t:"Aparência e backup",s:"Temas, cópia de segurança e instalação",i:"gear",c:"c-slate"}
 };
@@ -1478,11 +1500,12 @@ function renderDocs(){const list=docsFor();const groups=[];list.forEach(d=>{let 
   const GI={"Identificação":["user","c-blue"],"Empresa":["building","c-violet"],"Certidões":["shield","c-teal"],"Qualificação técnica":["mic","c-pink"],"Formulários assinados":["pen","c-violet"],"Se for o caso":["hand","c-amber"]}[G.g]||["folder","c-amber"];
   return `<div class="list"><div class="list-h"><span class="gi ${GI[1]}">${ic(GI[0],"sm")}</span>${esc(G.g)}${G.g==="Formulários assinados"?`<a class="btn sm soft c-pink" href="#formularios" style="margin-left:8px">${ic("file","sm")}Gerar formulários</a>`:""}<span class="count">${done}/${G.items.length}</span></div>${G.items.map(d=>{const st=status(d);const[sc,si]=stIcon(st.c);const rec=mem.docs[d.id]||{};
    return `<div class="item" data-drop="${d.id}"><span class="st ${sc}">${si}</span><div><div class="t">${esc(d.t)}</div>${d.d?`<div class="d">${esc(d.d)}</div>`:""}</div>
-   <div class="acts"><span class="badge ${st.c}">${st.t}</span>${d.link?`<a class="btn sm soft c-blue" href="${d.link}" target="_blank" rel="noopener">${ic("ext","sm")}${d.lk||"Emitir"}</a>`:""}${TPL[d.id]?`<button class="btn sm soft c-pink" data-tpl="${d.id}" title="Preencher um modelo pronto ou baixar em Word">${ic("edit","sm")}Modelo</button>`:""}<label class="btn sm primary" style="margin:0">${ic("clip","sm")}Anexar<input type="file" multiple data-id="${d.id}" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx,.webp"></label></div>
+   <div class="acts"><span class="badge ${st.c}">${st.t}</span>${d.link?`<a class="btn sm soft c-blue" href="${d.link}" target="_blank" rel="noopener">${ic("ext","sm")}${d.lk||"Emitir"}</a>`:""}${PP_DOC[d.id]?`<button class="btn sm soft c-violet" data-ppo="${PP_DOC[d.id]}" title="Montar no Portfólio Pro e anexar aqui">${ic("palette","sm")}Portfólio Pro</button>`:""}${TPL[d.id]?`<button class="btn sm soft c-pink" data-tpl="${d.id}" title="Preencher um modelo pronto ou baixar em Word">${ic("edit","sm")}Modelo</button>`:""}<label class="btn sm primary" style="margin:0">${ic("clip","sm")}Anexar<input type="file" multiple data-id="${d.id}" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx,.webp"></label></div>
    ${(rec.files||[]).length||d.cert?`<div class="more">${(rec.files||[]).map((f,i)=>`<span class="file">${ic("file","sm")}<span title="${esc(f.name)}">${esc(f.name)}</span><button title="Remover" data-rm="${d.id}" data-i="${i}">${ic("x","sm")}</button></span>`).join("")}
    ${d.cert?`<div class="dates"><div class="f"><label>Emissão</label><input type="date" data-em="${d.id}" value="${rec.emissao||""}"></div><div class="f"><label>Válida até</label><input type="date" data-va="${d.id}" value="${rec.validade||""}"></div></div>`:""}</div>`:""}</div>`}).join("")}</div>`}).join("");
  document.querySelectorAll("#doclist input[type=file]").forEach(inp=>inp.onchange=()=>addFiles(inp.dataset.id,[...inp.files]));
  document.querySelectorAll("#doclist [data-tpl]").forEach(b=>b.onclick=()=>openTpl(b.dataset.tpl));
+ document.querySelectorAll("#doclist [data-ppo]").forEach(b=>b.onclick=()=>ppOpen(b.dataset.ppo));
  document.querySelectorAll("#doclist [data-rm]").forEach(b=>b.onclick=async()=>{const id=b.dataset.rm;const rec=mem.docs[id];const f=rec.files[+b.dataset.i];if(!await confirmBox("Remover anexo?",f.name,"Remover"))return;rec.files.splice(+b.dataset.i,1);if(!rec.files.length&&!rec.emissao&&!rec.validade)await del("docs",id);else await put("docs",id,rec);renderAll()});
  document.querySelectorAll("#doclist [data-em],#doclist [data-va]").forEach(inp=>inp.onchange=async()=>{const id=inp.dataset.em||inp.dataset.va;const rec=mem.docs[id]||{files:[]};if(inp.dataset.em)rec.emissao=inp.value;else rec.validade=inp.value;await put("docs",id,rec);renderAll()});
  document.querySelectorAll("#doclist [data-drop]").forEach(el=>{el.ondragover=e=>{e.preventDefault();el.classList.add("drag")};el.ondragleave=()=>el.classList.remove("drag");el.ondrop=e=>{e.preventDefault();el.classList.remove("drag");if(e.dataTransfer.files.length)addFiles(el.dataset.drop,[...e.dataTransfer.files])}})}
@@ -1642,6 +1665,46 @@ $("tplPdf").onclick=e=>tplRun(e.currentTarget,async()=>saveFile(tplName(tpl.id)+
 $("tplAttach").onclick=e=>tplRun(e.currentTarget,async()=>{const id=tpl.id;const blob=await tplPdf(id);await addFiles(id,[new File([blob],tplName(id)+".pdf",{type:"application/pdf"})]);closeTpl()});
 $("tplImp").onchange=async e=>{const fs=[...e.target.files];e.target.value="";if(!fs.length)return;const id=tpl.id;closeTpl();await addFiles(id,fs)};
 $("tplOrig").onclick=async()=>{if(!tpl.imgs.length){toast("Adicione as fotos primeiro");return}const id=tpl.id;const fs=tpl.imgs.map(m=>new File([m.blob],m.name,{type:m.type}));closeTpl();await addFiles(id,fs)};
+
+const PP_DOC={port:"pdf",release:"release",fotos:"relatorio",cache:"relatorio"};
+// ---------- PONTE COM O PORTFÓLIO PRO (portfolio.html, mesmo endereço) ----------
+const pp={frame:null,ready:false,tab:null};
+const ppB=()=>{try{return pp.ready&&pp.frame.contentWindow.palcoBridge||null}catch(e){return null}};
+const igFrom=s=>{s=String(s||"");const m=s.match(/instagram\.com\/([A-Za-z0-9._]+)/i)||s.match(/@([A-Za-z0-9._]{2,})/);return m?"@"+m[1]:""};
+function ppFromPalco(){const p=P();const pj=p.tipo!=="PF";
+ return{profile:{marca:p.atracao,nome:p.nome,bio:p.release,email:p.email,whatsapp:p.telefone,cargo:p.profissao,cidade:[p.cidade,p.uf].filter(Boolean).join("/"),instagram:igFrom(p.redes),razao:pj?p.razao:"",cnpj:pj?p.cnpj:"",endereco:[p.endereco,p.bairro].filter(Boolean).join(", "),cpf:p.cpf,rg:p.rg},
+  release:{sobre:p.release,contatoNome:p.nome,contatoTelefone:p.telefone,contatoEmail:p.email}}}
+function palcoFromPP(d){const x=d.profile||{};const[c,u]=String(x.cidade||"").split("/").map(s=>s.trim());
+ return{atracao:x.marca,nome:x.nome,release:x.bio,email:x.email,telefone:x.whatsapp||x.telefone,profissao:x.cargo,cidade:c,uf:u&&u.length===2?u.toUpperCase():"",redes:x.instagram,razao:x.razao,cnpj:x.cnpj,cpf:x.cpf,rg:x.rg}}
+const filled=v=>String(v==null?"":v).trim()!=="";
+function ppDiff(target,src,force){const o={};for(const[k,v]of Object.entries(src)){if(!filled(v))continue;if(force?String(target[k]||"")!==String(v):!filled(target[k]))o[k]=v}return o}
+// mode: "auto" (completa só o que está vazio dos dois lados), "push" (Meus dados → Portfólio), "pull" (Portfólio → Meus dados)
+async function ppSync(mode){const b=ppB();if(!b)return;await savePerfil(true);const d=b.data();let nP=0,nL=0;
+ if(mode!=="pull"){const s=ppFromPalco();const patch={profile:ppDiff(d.profile||{},s.profile,mode==="push"),release:ppDiff(d.release||{},s.release,mode==="push")};nP=Object.keys(patch.profile).length+Object.keys(patch.release).length;if(nP)b.apply(patch)}
+ if(mode!=="push"){const src=palcoFromPP(mode==="pull"?d:b.data());const p=P();const patch=ppDiff(p,src,mode==="pull");if(p.tipo==="PF"){delete patch.razao;delete patch.cnpj}nL=Object.keys(patch).length;if(nL){await put("perfil","main",{...p,...patch});fillForm();renderAll(true)}}
+ if(mode!=="auto")toast(mode==="push"?(nP?`Portfólio atualizado (${nP} campo(s))`:"O Portfólio já está igual aos seus dados"):(nL?`Meus dados atualizados (${nL} campo(s))`:"Seus dados já estão iguais ao Portfólio"));
+ else if(nP||nL)toast(`Dados sincronizados com o Portfólio Pro`)}
+function ppEnsure(){pp.frame=$("ppFrame");if(!pp.frame.getAttribute("src")){$("ppLoading").classList.remove("hide");pp.frame.onload=async()=>{for(let i=0;i<150;i++){try{if(pp.frame.contentWindow.__ppReady)break}catch(e){}await new Promise(r=>setTimeout(r,100))}pp.ready=true;$("ppLoading").classList.add("hide");await ppSync("auto");if(pp.tab){ppB()&&ppB().go(pp.tab);pp.tab=null}};pp.frame.src="portfolio.html"}
+ else if(pp.ready){ppSync("auto");if(pp.tab){ppB()&&ppB().go(pp.tab);pp.tab=null}}}
+function ppOpen(tab){pp.tab=tab||null;if(location.hash==="#portfolio")ppEnsure();else location.hash="#portfolio"}
+window.addEventListener("hashchange",()=>{if(cur==="portfolio")ppEnsure();else if(pp.ready){const b=ppB();if(b)b.flush()}});
+$("ppPush").onclick=()=>ppSync("push");$("ppPull").onclick=()=>ppSync("pull");
+$("ppFull").onclick=()=>{document.body.classList.toggle("pp-full");$("ppFull").lastChild.textContent=document.body.classList.contains("pp-full")?"Sair da tela cheia":"Tela cheia"};
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&document.body.classList.contains("pp-full"))$("ppFull").click()});
+// arquivos gerados no Portfólio Pro chegam aqui
+const PP_SLOT={portfolio:"port",release:"release",report:"port"};
+const PP_KIND={portfolio:"Portfólio",release:"Release de imprensa",report:"Relatório de apresentações","decl-ex":"Declaração de exclusividade","decl-me":"Declaração de ausência de menores","decl-reg":"Declaração de regularidade"};
+window.palcoSave=async(name,blob)=>{await saveFile(name,blob);return"saved"};
+window.palcoReceive=({kind,name,blob})=>new Promise(res=>{const sig=new Set(SIG_SLOTS.map(x=>x.slot));const list=docsFor().filter(d=>!sig.has(d.id));
+ const def=PP_SLOT[kind]&&list.find(d=>d.id===PP_SLOT[kind])?PP_SLOT[kind]:"";
+ $("ppRecvP").innerHTML=`<b>${esc(PP_KIND[kind]||"Documento")}</b> gerado: ${esc(name)} (${(blob.size/1048576).toFixed(1)} MB).<br>Empresa: <b>${esc(profName(prof.active))}</b>`;
+ $("ppSlot").innerHTML=`<option value="">Não anexar</option>`+[...new Set(list.map(d=>d.g))].map(g=>`<optgroup label="${esc(g)}">${list.filter(d=>d.g===g).map(d=>`<option value="${d.id}" ${d.id===def?"selected":""}>${esc(d.t)}</option>`).join("")}</optgroup>`).join("");
+ $("ppDl").checked=!def;const m=$("ppRecv");m.classList.add("on");
+ const done=v=>{m.classList.remove("on");res(v)};
+ $("ppRecvNo").onclick=async()=>{await saveFile(name,blob);done("saved")};
+ $("ppRecvX").onclick=()=>done("declined");
+ $("ppRecvYes").onclick=async()=>{const slot=$("ppSlot").value;if(slot){await addFiles(slot,[new File([blob],name,{type:"application/pdf"})]);const d=DOCS.find(x=>x.id===slot);toast(`Anexado em ${d?d.t:"Documentos"}`)}if($("ppDl").checked||!slot)await saveFile(name,blob);done("saved")}});
+setTimeout(()=>{if(cur==="portfolio")ppEnsure()},0);
 
 // ---------- FORMULÁRIOS ----------
 async function renderGerarDocs(){const rows=await Promise.all(DOCDEFS.map(async d=>({d,m:await missing(d)})));
