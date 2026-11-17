@@ -350,6 +350,10 @@ ol.howto{margin:8px 0 0;padding-left:20px;color:var(--ink-2)}ol.howto li{margin:
 .f label.tpl-add,.tpl-add{min-height:120px;border:1.5px dashed var(--line);border-radius:12px;display:flex;flex-direction:column;gap:6px;align-items:center;justify-content:center;color:var(--brand);font-weight:700;font-size:13px;cursor:pointer;margin:0}.f label.tpl-add:hover{border-color:var(--brand)}.tpl-add input{display:none}
 .tpl-foot{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px;align-items:center}.tpl-foot .sp{flex:1}.tpl-foot label input{display:none}
 @media (max-width:520px){.tpl-foot .btn{flex:1 1 auto;justify-content:center}.tpl-foot .sp{display:none}}
+.prof{padding:2px 4px 4px}.prof select{font-weight:700;font-size:13.5px;padding:8px 10px;background:var(--surface-2);border-radius:12px}
+.prof-bar{align-items:center;flex-wrap:wrap}.prof-bar .row{margin-left:auto}
+.rsel{width:auto;padding:5px 28px 5px 9px;font-size:12.5px;border-radius:9px}
+.ritem.past{opacity:.72}
 </style>
 </head>
 <body>
@@ -359,6 +363,7 @@ ol.howto{margin:8px 0 0;padding-left:20px;color:var(--ink-2)}ol.howto li{margin:
     <nav class="nav" id="sideNav">
 <a href="#inicio" data-v="inicio" class="c-violet"><span class="t"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/><path d="M10 21v-6h4v6"/></svg></span>Início</a>
 <div class="nav-g">Credenciamento FMAC</div>
+<div class="prof"><select id="profSel" aria-label="Empresa ativa" title="Empresa / proponente ativo"></select></div>
 <a href="#dados" data-v="dados" class="c-blue"><span class="t"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg></span>Meus dados<span class="dot" data-dot="dados"></span></a>
 <a href="#documentos" data-v="documentos" class="c-amber"><span class="t"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6.5A1.5 1.5 0 0 1 4.5 5H9l2 2.5h8.5A1.5 1.5 0 0 1 21 9v9.5a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 18.5z"/></svg></span>Documentos<span class="dot" data-dot="documentos"></span></a>
 <a href="#formularios" data-v="formularios" class="c-pink"><span class="t"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H6.5A1.5 1.5 0 0 0 5 4.5v15A1.5 1.5 0 0 0 6.5 21h11a1.5 1.5 0 0 0 1.5-1.5V8z"/><path d="M14 3v5h5"/><path d="M8.5 13h7M8.5 16.5h5"/></svg></span>Formulários<span class="dot" data-dot="formularios"></span></a>
@@ -372,7 +377,7 @@ ol.howto{margin:8px 0 0;padding-left:20px;color:var(--ink-2)}ol.howto li{margin:
     <div class="side-foot">
       <div class="mini-prog"><div class="row1"><span>Credenciamento FMAC</span><span id="sideProgTxt">0%</span></div><div class="bar"><div id="sideProg" style="width:0"></div></div></div>
       <button class="btn ghost sm hide" id="installSide"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>Instalar no computador</button>
-      <div class="ver"><span>Versão 2.2</span><span>17/11/2026</span></div>
+      <div class="ver"><span>Versão 2.3</span><span>17/11/2026</span></div>
     </div>
   </aside>
   <div class="main">
@@ -404,6 +409,7 @@ ol.howto{margin:8px 0 0;padding-left:20px;color:var(--ink-2)}ol.howto li{margin:
       </section>
 
 <section class="view" id="dados">
+        <div class="notice info prof-bar" id="profBar"></div>
         <div class="card">
           <div class="card-h"><div class="ic c-violet"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.6 13.4 13.4 20.6a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8z"/><circle cx="7.5" cy="7.5" r="1.2"/></svg></div><div><h2>Inscrição</h2><p>Define a lista de documentos e o preenchimento dos formulários.</p></div></div>
           <div class="grid">
@@ -588,7 +594,7 @@ ol.howto{margin:8px 0 0;padding-left:20px;color:var(--ink-2)}ol.howto li{margin:
 
       <section class="view" id="v-editais">
         <div class="card radar c-orange" id="radarCard">
-          <div class="card-h"><div class="ic c-orange"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="M12 12 18.5 5.5"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/></svg></div><div><h2>Radar de editais <span class="live" id="radarLive"><i></i>Ao vivo</span></h2><p id="radarSub">Busca automática nos portais da FMAC/Prefeitura de Maceió e da SECULT-AL, 3 vezes ao dia.</p></div>
+          <div class="card-h"><div class="ic c-orange"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="M12 12 18.5 5.5"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/></svg></div><div><h2>Radar de editais <span class="live" id="radarLive"><i></i>Ao vivo</span></h2><p id="radarSub">Busca automática de editais culturais da FMAC, da SECULT-AL e das prefeituras de Alagoas, 3 vezes ao dia.</p></div>
             <div class="act"><div class="filters" id="radarTabs"></div></div></div>
           <div id="radarBody"></div>
         </div>
@@ -643,6 +649,10 @@ ol.howto{margin:8px 0 0;padding-left:20px;color:var(--ink-2)}ol.howto li{margin:
   <div id="tplBody"></div>
   <div class="tpl-foot"><label class="btn sm soft c-violet" title="Anexar o arquivo que você preencheu no Word ou Google Docs (PDF, Word ou imagem)"><svg class="i sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21V9"/><path d="m7 14 5-5 5 5"/><path d="M5 3h14"/></svg>Importar preenchido<input type="file" id="tplImp" multiple accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.webp"></label><button class="btn sm soft c-teal hide" id="tplOrig" title="Anexa as fotos como arquivos de imagem, sem montar PDF"><svg class="i sm" viewBox="0 0 24 24" aria-hidden="true"><path d="m21 11-8.5 8.5a5 5 0 0 1-7-7L14 4a3.5 3.5 0 0 1 5 5l-8.6 8.5a2 2 0 0 1-2.8-2.8L15.5 7"/></svg>Anexar fotos originais</button><button class="btn sm" id="tplReset" title="Volta os textos para os de Meus dados">Recomeçar</button><span class="sp"></span><button class="btn sm outline c-blue" id="tplWord"><svg class="i sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H6.5A1.5 1.5 0 0 0 5 4.5v15A1.5 1.5 0 0 0 6.5 21h11a1.5 1.5 0 0 0 1.5-1.5V8z"/><path d="M14 3v5h5"/><path d="m8 11.5 1.3 5 1.7-4 1.7 4 1.3-5"/></svg>Baixar Word</button><button class="btn sm outline c-red" id="tplPdf"><svg class="i sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H6.5A1.5 1.5 0 0 0 5 4.5v15A1.5 1.5 0 0 0 6.5 21h11a1.5 1.5 0 0 0 1.5-1.5V8z"/><path d="M14 3v5h5"/><path d="M8.5 17v-4.5h1.3a1.3 1.3 0 0 1 0 2.6H8.5M13 12.5v4.5h.8a2 2 0 0 0 2-2.2 2 2 0 0 0-2-2.3z"/></svg>Baixar PDF</button><button class="btn sm primary" id="tplAttach"><svg class="i sm" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>Gerar PDF e anexar</button></div>
 </div></div>
+<div class="modal-bg" id="profModal"><div class="modal c-blue"><div class="mh"><span class="t"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 21V5a1 1 0 0 1 1-1h9a1 1 0 0 1 1 1v16"/><path d="M15 9h4a1 1 0 0 1 1 1v11"/><path d="M8 8h3M8 12h3M8 16h3M3 21h18"/></svg></span><h3 id="profT">Nova empresa</h3></div><p id="profP">Cada empresa tem os próprios dados, documentos, certidões e formulários. Troque de empresa no menu lateral.</p>
+  <div class="f"><label for="profNome">Nome para identificar</label><input id="profNome" placeholder="Ex.: Minha MEI, Produtora Sorriso"></div>
+  <label class="imp-opt" id="profCopyL" style="margin-top:12px"><input type="checkbox" id="profCopy" checked><span>Copiar os dados artísticos de <b id="profFrom"></b><small>Atração, categoria, gêneros, integrantes, release, ficha técnica, links, redes e contatos. Dados da empresa, documentos e certidões não são copiados.</small></span></label>
+  <div class="row" style="margin-top:16px"><button class="btn" id="profNo">Cancelar</button><button class="btn primary" id="profYes">Criar</button></div></div></div>
 <div class="modal-bg" id="sigModal"><div class="modal" style="max-width:620px;max-height:calc(100vh - 32px);overflow:auto"><h3>Importar formulários assinados</h3><p style="margin-bottom:12px">Confira o que está dentro de cada arquivo. Os arquivos são anexados sem nenhuma alteração, para a assinatura continuar válida.</p>
   <div id="sigList" class="imp-list"></div>
   <label class="imp-opt"><input type="checkbox" id="sigReplace" checked><span>Substituir os anexos antigos desses formulários<small>Remove os PDFs anexados antes para os mesmos formulários, inclusive os que aparecem como "Conferir assinatura".</small></span></label>
@@ -1197,10 +1207,27 @@ const FIELDS=["tipo","categoria","atracao","integrantes","nome","cpf","rg","orga
 let db=null; const mem={perfil:{},docs:{},meta:{},orgs:{},editais:{}};const state={zip:null};
 function openDB(){return new Promise(res=>{try{const r=indexedDB.open("fmac-toca-tudo",3);r.onupgradeneeded=()=>{const d=r.result;for(const s of ["perfil","docs","meta","orgs","editais"])if(!d.objectStoreNames.contains(s))d.createObjectStore(s)};r.onsuccess=()=>{db=r.result;res(true)};r.onerror=()=>res(false)}catch(e){res(false)}})}
 function idb(store,mode,fn){return new Promise((res,rej)=>{if(!db){res(fn(null));return}try{const tx=db.transaction(store,mode);const s=tx.objectStore(store);const r=fn(s);tx.oncomplete=()=>res(r&&r.result!==undefined?r.result:r);tx.onerror=()=>rej(tx.error)}catch(e){rej(e)}})}
-async function put(store,key,val){if(store==="perfil")mem.perfil=val;else if(store==="meta")mem.meta=val;else mem[store][key]=val;if(db)await idb(store,"readwrite",s=>s.put(val,key))}
-async function del(store,key){delete mem[store][key];if(db)await idb(store,"readwrite",s=>s.delete(key))}
+const GK=["radar","theme","lastBackup","seeded"];
+const prof={active:"main",list:[{id:"main"}],labels:{},glob:null};
+const PK=k=>prof.active==="main"?k:prof.active+"::"+k;
+async function put(store,key,val){
+ if(store==="perfil"){mem.perfil=val;if(db)await idb("perfil","readwrite",s=>s.put(val,PK("main")));return}
+ if(store==="meta"){mem.meta=val;const g={},m={};for(const k in val)(GK.includes(k)?g:m)[k]=val[k];prof.glob=g;if(db)await idb("meta","readwrite",s=>{s.put(g,"global");s.put(m,PK("main"))});return}
+ mem[store][key]=val;if(db)await idb(store,"readwrite",s=>s.put(val,store==="docs"?PK(key):key))}
+async function del(store,key){delete mem[store][key];if(db)await idb(store,"readwrite",s=>s.delete(store==="docs"?PK(key):key))}
 async function setMeta(){mem.meta.zip=state.zip;await put("meta","main",mem.meta)}
-async function loadAll(){if(!db)return;await new Promise(res=>{const tx=db.transaction(["perfil","docs","meta","orgs","editais"]);tx.objectStore("perfil").get("main").onsuccess=e=>{mem.perfil=e.target.result||{}};tx.objectStore("meta").get("main").onsuccess=e=>{mem.meta=e.target.result||{};state.zip=mem.meta.zip||null};for(const st of ["docs","orgs","editais"]){const c=tx.objectStore(st).openCursor();c.onsuccess=e=>{const cur=e.target.result;if(cur){mem[st][cur.key]=cur.value;cur.continue()}}};tx.oncomplete=res;tx.onerror=res})}
+async function loadAll(){if(!db)return;
+ await new Promise(res=>{const tx=db.transaction(["meta","perfil","orgs","editais"]);const ms=tx.objectStore("meta");
+  ms.get("profiles").onsuccess=e=>{const v=e.target.result;if(v){prof.active=v.active||"main";if(v.list&&v.list.length)prof.list=v.list}};
+  ms.get("global").onsuccess=e=>{prof.glob=e.target.result||null};
+  const c=tx.objectStore("perfil").openCursor();c.onsuccess=e=>{const cur=e.target.result;if(cur){const k=String(cur.key);prof.labels[k==="main"?"main":k.split("::")[0]]=profLabel(cur.value);cur.continue()}};
+  for(const st of ["orgs","editais"]){const c2=tx.objectStore(st).openCursor();c2.onsuccess=e=>{const cur=e.target.result;if(cur){mem[st][cur.key]=cur.value;cur.continue()}}};tx.oncomplete=res;tx.onerror=res});
+ if(!prof.list.find(p=>p.id===prof.active))prof.active=prof.list[0].id;await loadProfile()}
+async function loadProfile(){mem.perfil={};mem.docs={};let pm={};const pre=prof.active==="main"?null:prof.active+"::";
+ if(db)await new Promise(res=>{const tx=db.transaction(["perfil","meta","docs"]);tx.objectStore("perfil").get(PK("main")).onsuccess=e=>{mem.perfil=e.target.result||{}};tx.objectStore("meta").get(PK("main")).onsuccess=e=>{pm=e.target.result||{}};
+  const c=tx.objectStore("docs").openCursor();c.onsuccess=e=>{const cur=e.target.result;if(!cur)return;const k=String(cur.key);if(pre?k.startsWith(pre):!k.includes("::"))mem.docs[pre?k.slice(pre.length):k]=cur.value;cur.continue()};tx.oncomplete=res;tx.onerror=res});
+ if(!prof.glob){prof.glob={};for(const k of GK)if(pm[k]!==undefined)prof.glob[k]=pm[k];if(db)await idb("meta","readwrite",s=>s.put(prof.glob,"global"))}
+ mem.meta={...pm,...prof.glob};state.zip=mem.meta.zip||null}
 
 // ---------- Utils ----------
 const $=id=>document.getElementById(id);
@@ -1224,7 +1251,7 @@ async function copy(txt){try{await navigator.clipboard.writeText(txt);toast("Cop
 function renderGeneros(){$("generos").innerHTML=GENEROS.map(g=>`<label><input type="checkbox" value="${g}" ${(P().generos||[]).includes(g)?"checked":""}>${g}</label>`).join("")}
 function toggleTipo(){const t=$("tipo").value;document.querySelectorAll(".pj").forEach(e=>e.style.display=t==="PF"?"none":"");document.querySelectorAll(".onlypf").forEach(e=>e.style.display=t==="PF"?"":"none");$("titProp").textContent=t==="PF"?"Proponente":"Empresa e representante legal";$("generosBox").style.display=$("categoria").value==="Artistas e Bandas"?"":"none"}
 function migrate(){const p=P();if(p.cidade&&p.cidade.includes("/")&&!p.uf){const[c,u]=p.cidade.split("/");p.cidade=c.trim();p.uf=(u||"").trim()}if(p.rg&&!p.orgao){const m=p.rg.match(/^(.*?)[\s\/-]+((?:SSP|SDS|DETRAN|PC|IFP|SESP)[\w\/-]*)$/i);if(m){p.rg=m[1].trim();p.orgao=m[2]}}}
-function fillForm(){migrate();FIELDS.forEach(f=>{if(P()[f]!==undefined&&$(f))$(f).value=P()[f]});renderGeneros();toggleTipo()}
+function fillForm(){migrate();FIELDS.forEach(f=>{const e=$(f);if(!e)return;const v=P()[f];if(v!==undefined)e.value=v;else if(e.tagName==="SELECT")e.selectedIndex=0;else e.value=""});renderGeneros();toggleTipo()}
 async function savePerfil(silent){const p={};FIELDS.forEach(f=>p[f]=$(f).value.trim());p.generos=[...document.querySelectorAll("#generos input:checked")].map(i=>i.value);try{await put("perfil","main",p)}catch(e){mem.perfil=p}markSaved();if(!silent)toast("Dados salvos")}
 $("tipo").onchange=()=>{toggleTipo();savePerfil(true)};$("categoria").onchange=()=>{toggleTipo();savePerfil(true)};document.querySelector("#dados").addEventListener("change",()=>savePerfil(true));
 let st;document.querySelector("#dados").addEventListener("input",()=>{setSaving();clearTimeout(st);st=setTimeout(()=>savePerfil(true),700)});
@@ -1414,7 +1441,7 @@ function envioStat(){const s=mem.meta.sent;return{sent:s,pct:s?1:state.zip?.5:0}
 const dotCls=p=>p>=1?"ok":p>0?"warn":"";
 let lastStats=null;
 async function stats(){const a=dadosStat(),b=docsStat(),c=await formsStat(),d=envioStat();const tot=(a.pct+b.pct+c.pct+d.pct)/4;lastStats={a,b,c,d,tot};return lastStats}
-async function renderChrome(){const rn=radar?radarNew().length:0;document.querySelectorAll("[data-new=radar]").forEach(e=>{e.textContent=rn;e.classList.toggle("hide",!rn)});document.querySelectorAll("[data-cnt=orgaos]").forEach(e=>e.textContent=Object.keys(mem.orgs).length);document.querySelectorAll("[data-cnt=editais]").forEach(e=>e.textContent=Object.values(mem.editais).filter(x=>!["Encerrado","Não selecionado"].includes(x.status)).length);const s=await stats();const pct=Math.round(s.tot*100);
+async function renderChrome(){renderProf();const rn=radar?radarNew().length:0;document.querySelectorAll("[data-new=radar]").forEach(e=>{e.textContent=rn;e.classList.toggle("hide",!rn)});document.querySelectorAll("[data-cnt=orgaos]").forEach(e=>e.textContent=Object.keys(mem.orgs).length);document.querySelectorAll("[data-cnt=editais]").forEach(e=>e.textContent=Object.values(mem.editais).filter(x=>!["Encerrado","Não selecionado"].includes(x.status)).length);const s=await stats();const pct=Math.round(s.tot*100);
  $("sideProg").style.width=pct+"%";$("sideProgTxt").textContent=pct+"%";
  const dots={dados:s.a.pct,documentos:s.b.pct,formularios:s.c.pct,enviar:s.d.pct};
  document.querySelectorAll("[data-dot]").forEach(e=>{e.className="dot "+dotCls(dots[e.dataset.dot])});
@@ -1701,17 +1728,52 @@ document.querySelectorAll("[data-copy]").forEach(b=>b.onclick=()=>{const m=mail(
 // ---------- BACKUP ----------
 const b2b64=blob=>new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(String(r.result).split(",")[1]||"");r.onerror=rej;r.readAsDataURL(blob)});
 const b642blob=(b64,type)=>{const bin=atob(b64);const u=new Uint8Array(bin.length);for(let i=0;i<bin.length;i++)u[i]=bin.charCodeAt(i);return new Blob([u],{type:type||"application/octet-stream"})};
-$("expBtn").onclick=async e=>{const btn=e.currentTarget;btn.disabled=true;try{await savePerfil(true);const docs={};for(const[id,rec]of Object.entries(mem.docs)){docs[id]={emissao:rec.emissao||"",validade:rec.validade||"",files:[]};for(const f of rec.files||[])docs[id].files.push({name:f.name,type:f.type,sig:f.sig||undefined,docs:f.docs,b64:await b2b64(f.blob)})}
- const data={app:"fmac-toca-tudo",name:"Palco Pronto",v:2,at:new Date().toISOString(),perfil:mem.perfil,meta:mem.meta,docs,orgs:mem.orgs,editais:mem.editais};
- await saveFile(`Backup-PalcoPronto-${slug(P().atracao)||"dados"}-${new Date().toISOString().slice(0,10)}.json`,new Blob([JSON.stringify(data)],{type:"application/json"}));
- mem.meta.lastBackup=new Date().toISOString();await put("meta","main",mem.meta);renderAjustes()}catch(err){toast("Erro no backup: "+err.message)}btn.disabled=false};
+async function readProf(id){const out={perfil:{},meta:{},docs:{}};if(!db)return out;const k=x=>id==="main"?x:id+"::"+x;const pre=id==="main"?null:id+"::";
+ await new Promise(res=>{const tx=db.transaction(["perfil","meta","docs"]);tx.objectStore("perfil").get(k("main")).onsuccess=e=>{out.perfil=e.target.result||{}};tx.objectStore("meta").get(k("main")).onsuccess=e=>{out.meta=e.target.result||{}};
+  const c=tx.objectStore("docs").openCursor();c.onsuccess=e=>{const cur=e.target.result;if(!cur)return;const kk=String(cur.key);if(pre?kk.startsWith(pre):!kk.includes("::"))out.docs[pre?kk.slice(pre.length):kk]=cur.value;cur.continue()};tx.oncomplete=res;tx.onerror=res});
+ for(const g of GK)delete out.meta[g];return out}
+const docsToB64=async docs=>{const o={};for(const[id,rec]of Object.entries(docs)){o[id]={emissao:rec.emissao||"",validade:rec.validade||"",files:[]};for(const f of rec.files||[])o[id].files.push({name:f.name,type:f.type,sig:f.sig||undefined,docs:f.docs,b64:await b2b64(f.blob)})}return o};
+const docsFromB64=r=>({emissao:r.emissao,validade:r.validade,files:(r.files||[]).map(x=>({name:x.name,type:x.type,sig:x.sig,docs:x.docs,blob:b642blob(x.b64,x.type)}))});
+$("expBtn").onclick=async e=>{const btn=e.currentTarget;btn.disabled=true;try{await savePerfil(true);mem.meta.lastBackup=new Date().toISOString();await put("meta","main",mem.meta);
+ const perfis={};for(const p of prof.list){const r=await readProf(p.id);perfis[p.id]={perfil:r.perfil,meta:r.meta,docs:await docsToB64(r.docs)}}
+ const data={app:"fmac-toca-tudo",name:"Palco Pronto",v:3,at:new Date().toISOString(),glob:prof.glob||{},profiles:{active:prof.active,list:prof.list},perfis,orgs:mem.orgs,editais:mem.editais};
+ await saveFile(`Backup-PalcoPronto-${prof.list.length>1?prof.list.length+"-empresas":slug(P().atracao)||"dados"}-${new Date().toISOString().slice(0,10)}.json`,new Blob([JSON.stringify(data)],{type:"application/json"}));
+ renderAjustes()}catch(err){toast("Erro no backup: "+err.message)}btn.disabled=false};
 $("impFile").onchange=async e=>{const f=e.target.files[0];e.target.value="";if(!f)return;try{const data=JSON.parse(await f.text());if(data.app!=="fmac-toca-tudo")throw new Error("arquivo não é um backup deste sistema");
- if(!await confirmBox("Restaurar backup?",`Os dados atuais serão substituídos pelos do backup de ${new Date(data.at).toLocaleString("pt-BR")}.`,"Restaurar"))return;
- await wipe(true);await put("perfil","main",data.perfil||{});mem.meta=data.meta||{};await put("meta","main",mem.meta);state.zip=mem.meta.zip||null;
+ const n=data.v>=3?(data.profiles.list||[]).length:1;
+ if(!await confirmBox("Restaurar backup?",`Os dados atuais serão substituídos pelos do backup de ${new Date(data.at).toLocaleString("pt-BR")}${n>1?` (${n} empresas)`:""}.`,"Restaurar"))return;
+ await wipe(true);
  for(const st of ["orgs","editais"])for(const[id,r]of Object.entries(data[st]||{}))await put(st,id,r);
- for(const[id,r]of Object.entries(data.docs||{}))await put("docs",id,{emissao:r.emissao,validade:r.validade,files:(r.files||[]).map(x=>({name:x.name,type:x.type,sig:x.sig,docs:x.docs,blob:b642blob(x.b64,x.type)}))});
+ if(data.v>=3){prof.list=data.profiles.list;for(const p of prof.list){const d=data.perfis[p.id]||{};prof.active=p.id;await put("perfil","main",d.perfil||{});await put("meta","main",{...(d.meta||{}),...(data.glob||{})});for(const[id,r]of Object.entries(d.docs||{}))await put("docs",id,docsFromB64(r))}prof.active=data.profiles.active||prof.list[0].id}
+ else{await put("perfil","main",data.perfil||{});await put("meta","main",data.meta||{});for(const[id,r]of Object.entries(data.docs||{}))await put("docs",id,docsFromB64(r))}
+ await saveProfs();prof.labels={};await loadAll();if(!P().tipo)mem.perfil.tipo="PF";
  applyTheme();fillForm();syncTipoRadios();toast("Backup restaurado");renderAll()}catch(err){toast("Não foi possível restaurar: "+err.message)}};
-async function wipe(silent){if(db){for(const s of ["perfil","docs","meta","orgs","editais"])await idb(s,"readwrite",st=>st.clear())}mem.perfil={tipo:"PF"};mem.docs={};mem.meta={};mem.orgs={};mem.editais={};state.zip=null;if(!silent){fillForm();syncTipoRadios();toast("Dados apagados");renderAll()}}
+async function wipe(silent){if(db){for(const s of ["perfil","docs","meta","orgs","editais"])await idb(s,"readwrite",st=>st.clear())}prof.active="main";prof.list=[{id:"main"}];prof.labels={};prof.glob={};mem.perfil={tipo:"PF"};mem.docs={};mem.meta={};mem.orgs={};mem.editais={};state.zip=null;if(!silent){fillForm();syncTipoRadios();toast("Dados apagados");renderAll()}}
+
+// ---------- VÁRIAS EMPRESAS ----------
+const profLabel=p=>p?((p.tipo!=="PF"&&p.razao)||p.nome||p.atracao||""):"";
+function profName(id){const p=prof.list.find(x=>x.id===id)||{};return p.nome||prof.labels[id]||"Empresa sem nome"}
+async function saveProfs(){if(db)await idb("meta","readwrite",s=>s.put({active:prof.active,list:prof.list},"profiles"))}
+function renderProf(){prof.labels[prof.active]=profLabel(P());const sel=$("profSel");if(sel){sel.innerHTML=prof.list.map(p=>`<option value="${esc(p.id)}" ${p.id===prof.active?"selected":""}>${esc(profName(p.id))}</option>`).join("")+`<option value="__new">＋ Nova empresa…</option>`;sel.value=prof.active}
+ const bar=$("profBar");if(bar){const n=prof.list.length;bar.innerHTML=`${ic("building")}<div style="flex:1;min-width:200px">Você está preenchendo: ${n>1?`<select class="rsel" id="profSel2" aria-label="Trocar de empresa">${prof.list.map(p=>`<option value="${esc(p.id)}" ${p.id===prof.active?"selected":""}>${esc(profName(p.id))}</option>`).join("")}</select> <span class="small">(${n} empresas)</span>`:`<b>${esc(profName(prof.active))}</b>`}</div><div class="row"><button class="btn sm soft c-blue" id="profRen">${ic("edit","sm")}Renomear</button><button class="btn sm soft c-blue" id="profAdd">${ic("plus","sm")}Nova empresa</button>${n>1?`<button class="btn sm danger" id="profDel">${ic("trash","sm")}Excluir</button>`:""}</div>`;
+  if($("profSel2"))$("profSel2").onchange=e=>switchProf(e.target.value);$("profRen").onclick=()=>profDialog("ren");$("profAdd").onclick=()=>profDialog("new");if($("profDel"))$("profDel").onclick=delProf}}
+async function switchProf(id){if(id===prof.active)return;await savePerfil(true);prof.active=id;await saveProfs();await loadProfile();if(!P().tipo)mem.perfil.tipo="PF";fillForm();syncTipoRadios();renderProf();toast("Empresa ativa: "+profName(id));renderAll()}
+const COPY_FIELDS=["atracao","categoria","generos","integrantes","release","fichatec","links","redes","carreira","duracao","telefone","email","telefone2","email2"];
+function profDialog(mode){const ren=mode==="ren";$("profT").textContent=ren?"Renomear empresa":"Nova empresa";$("profP").classList.toggle("hide",ren);$("profCopyL").classList.toggle("hide",ren);$("profYes").textContent=ren?"Salvar":"Criar";
+ $("profNome").value=ren?((prof.list.find(p=>p.id===prof.active)||{}).nome||""):"";$("profNome").placeholder=ren?profName(prof.active):"Ex.: Minha MEI, Produtora Sorriso";$("profFrom").textContent=profName(prof.active);$("profModal").classList.add("on");setTimeout(()=>$("profNome").focus(),50);
+ const close=()=>{$("profModal").classList.remove("on");renderProf()};$("profNo").onclick=close;$("profModal").onmousedown=e=>{if(e.target.id==="profModal")close()};
+ $("profYes").onclick=async()=>{const nome=$("profNome").value.trim();
+  if(ren){const p=prof.list.find(x=>x.id===prof.active);if(p)p.nome=nome;await saveProfs();close();toast("Nome salvo");return}
+  await savePerfil(true);const base={tipo:"PF"};if($("profCopy").checked)COPY_FIELDS.forEach(f=>{if(P()[f]!==undefined)base[f]=P()[f]});
+  const theme=mem.meta.theme;const id="p"+Date.now().toString(36);prof.list.push({id,nome});prof.active=id;await saveProfs();
+  await put("perfil","main",base);await put("meta","main",{...prof.glob,theme});await loadProfile();fillForm();syncTipoRadios();close();location.hash="#dados";toast("Empresa criada. Preencha os dados dela.");renderAll()}}
+async function delProf(){if(prof.list.length<2)return;const id=prof.active;if(!await confirmBox("Excluir esta empresa?",`Os dados, documentos e formulários de "${profName(id)}" serão apagados deste navegador. Faça um backup antes, se quiser guardar.`,"Excluir"))return;
+ if(db){const pre=id==="main"?null:id+"::";const k=x=>id==="main"?x:id+"::"+x;await idb("perfil","readwrite",s=>s.delete(k("main")));await idb("meta","readwrite",s=>s.delete(k("main")));
+  const keys=await new Promise(res=>{const out=[];const tx=db.transaction("docs");const c=tx.objectStore("docs").openCursor();c.onsuccess=e=>{const cur=e.target.result;if(!cur)return;const kk=String(cur.key);if(pre?kk.startsWith(pre):!kk.includes("::"))out.push(cur.key);cur.continue()};tx.oncomplete=()=>res(out);tx.onerror=()=>res(out)});
+  await idb("docs","readwrite",s=>{keys.forEach(x=>s.delete(x))})}
+ prof.list=prof.list.filter(p=>p.id!==id);delete prof.labels[id];prof.active=prof.list[0].id;await saveProfs();await loadProfile();if(!P().tipo)mem.perfil.tipo="PF";fillForm();syncTipoRadios();toast("Empresa excluída");renderAll()}
+$("profSel").onchange=e=>{const v=e.target.value;if(v==="__new"){e.target.value=prof.active;profDialog("new")}else switchProf(v)};
+$("profNome").onkeydown=e=>{if(e.key==="Enter")$("profYes").click()};
 $("wipeBtn").onclick=async()=>{if(await confirmBox("Apagar todos os dados?","Seus dados e todos os anexos serão removidos deste navegador. Faça um backup antes, se quiser guardar.","Apagar tudo"))wipe()};
 
 // ---------- INSTALAÇÃO ----------
@@ -1851,42 +1913,53 @@ const radar={db:null,items:[],sync:null,loaded:false,tab:"novos",first:true};
 const ONLINE_URL="https://claude.ai/artifact/SyLfv4UAqr5wkmpzY6V3ZU";
 function radarState(id){return(mem.meta.radar||{})[id]||""}
 async function setRadarState(id,v){mem.meta.radar=Object.assign({},mem.meta.radar,{[id]:v});await put("meta","main",mem.meta)}
-const radarNew=()=>radar.items.filter(r=>!radarState(r.id)&&r.situacao!=="encerrado");
+const todayISO=()=>{const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`};
+function radarPast(r){const t=todayISO();return r.situacao==="encerrado"||!!(r.prazo&&r.prazo<t)||!!(r.dataEvento&&r.dataEvento<t)}
+const radarValid=r=>!radarPast(r);
+const radarMun=r=>r.municipio||(r.orgaoId==="secult"?"Estado de Alagoas":r.orgaoId==="fmac"?"Maceió":"");
+const radarNew=()=>radar.items.filter(r=>!radarState(r.id)&&radarValid(r));
 function fmtWhen(iso){if(!iso)return"—";const d=new Date(iso);const min=Math.round((Date.now()-d)/6e4);if(min<1)return"agora";if(min<60)return`há ${min} min`;if(min<1440)return`há ${Math.round(min/60)} h`;return d.toLocaleDateString("pt-BR")+" "+d.toLocaleTimeString("pt-BR",{hour:"2-digit",minute:"2-digit"})}
 function renderRadar(){const body=$("radarBody");if(!body)return;
  if(!radar.db){$("radarLive").classList.add("off");$("radarLive").lastChild.textContent=IS_PWA_BUILD||!window.claude?"Offline":"Conectando";$("radarTabs").innerHTML="";
   body.innerHTML=radar.loaded||IS_PWA_BUILD||!window.claude?`<div class="notice info">${ic("info")}<div>${IS_PWA_BUILD||!window.claude?`A sincronização automática funciona na <b>versão online</b> do Palco Pronto, que recebe os editais encontrados pela busca agendada. <a href="${ONLINE_URL}" target="_blank" rel="noopener">Abrir a versão online</a>. Depois, use <b>Backup</b> para trazer o que quiser para cá.`:"Não foi possível conectar ao radar agora. Os editais detectados aparecem aqui assim que a conexão voltar."}</div></div>`:`<p class="muted small">Conectando ao radar…</p>`;return}
  $("radarLive").classList.remove("off");$("radarLive").lastChild.textContent="Ao vivo";
- const sy=radar.sync||{};const novos=radarNew();
- const tabs=[["novos",`Novos · ${novos.length}`],["todos",`Todos · ${radar.items.length}`],["ignorados",`Ignorados · ${radar.items.filter(r=>radarState(r.id)==="ignored").length}`]];
+ const sy=radar.sync||{};const novos=radarNew();const valid=radar.items.filter(r=>radarValid(r)&&radarState(r.id)!=="ignored");const past=radar.items.filter(radarPast);const ign=radar.items.filter(r=>radarState(r.id)==="ignored"&&radarValid(r));
+ const tabs=[["novos",`Novos · ${novos.length}`],["abertos",`Abertos · ${valid.length}`],["encerrados",`Encerrados · ${past.length}`],["ignorados",`Ignorados · ${ign.length}`]];
  $("radarTabs").innerHTML=tabs.map(([k,l])=>`<button class="${radar.tab===k?"on":""}" data-rt="${k}">${l}</button>`).join("");
  $("radarTabs").querySelectorAll("button").forEach(b=>b.onclick=()=>{radar.tab=b.dataset.rt;renderRadar()});
- const list=radar.tab==="novos"?novos:radar.tab==="ignorados"?radar.items.filter(r=>radarState(r.id)==="ignored"):radar.items;
- const stat=`<div class="rstat"><span>${ic("clock","xs")} Última busca: <b>${fmtWhen(sy.ultimaVarredura)}</b></span>${sy.proxima?`<span>Próxima: <b>${new Date(sy.proxima).toLocaleString("pt-BR",{dateStyle:"short",timeStyle:"short"})}</b></span>`:""}<span>Fontes: <b>${esc((sy.fontes||["FMAC/Prefeitura de Maceió","SECULT-AL"]).join(", "))}</b></span>${sy.mensagem?`<span>${esc(sy.mensagem)}</span>`:""}</div>`;
- if(!list.length){body.innerHTML=stat+`<div class="empty c-orange" style="padding:20px"><div class="t">${ic("radar")}</div><b>${radar.tab==="novos"?"Nenhum edital novo":"Nada aqui"}</b>${radar.tab==="novos"?"Quando a busca encontrar um edital novo, ele aparece aqui na hora.":""}</div>`;return}
- const sorted=[...list].sort((a,b)=>({aberto:0,fluxo:1,em_breve:2,encerrado:3}[a.situacao]??4)-({aberto:0,fluxo:1,em_breve:2,encerrado:3}[b.situacao]??4)||(a.prazo||"9999").localeCompare(b.prazo||"9999"));
- body.innerHTML=stat+`<div class="rgrid">${sorted.map(r=>{const st=radarState(r.id);const[sl,sc]=RADAR_SIT[r.situacao]||["—","b-mute"];const isNew=!st&&r.situacao!=="encerrado";
-  return `<div class="ritem ${isNew?"isnew":""}">${isNew?`<span class="nw">NOVO</span>`:""}<div class="rt">${esc(r.titulo)}</div>
-  <div class="rm"><span class="badge ${sc}">${sl}</span>${r.prazo?dueChip(r.prazo):""}<span>${ic("building","xs")} ${esc(r.orgao||"")}</span></div>
+ const base=radar.tab==="novos"?novos:radar.tab==="encerrados"?past:radar.tab==="ignorados"?ign:valid;
+ const muns=[...new Set(radar.items.map(radarMun).filter(Boolean))].sort((a,b)=>a.localeCompare(b,"pt-BR"));if(radar.mun&&!muns.includes(radar.mun))radar.mun="";
+ const list=radar.mun?base.filter(r=>radarMun(r)===radar.mun):base;
+ const munSel=muns.length>1?`<select class="rsel" id="radarMun" aria-label="Filtrar por município"><option value="">Todos os municípios</option>${muns.map(m=>`<option ${radar.mun===m?"selected":""}>${esc(m)}</option>`).join("")}</select>`:"";
+ const stat=`<div class="rstat">${munSel}<span>${ic("clock","xs")} Última busca: <b>${fmtWhen(sy.ultimaVarredura)}</b></span>${sy.proxima?`<span>Próxima: <b>${new Date(sy.proxima).toLocaleString("pt-BR",{dateStyle:"short",timeStyle:"short"})}</b></span>`:""}<span>Fontes: <b>${esc((sy.fontes||["FMAC/Prefeitura de Maceió","SECULT-AL"]).join(", "))}</b></span>${sy.mensagem?`<span>${esc(sy.mensagem)}</span>`:""}</div><p class="muted small" style="margin:-6px 0 12px">Editais com prazo vencido ou evento com data passada vão para <b>Encerrados</b> automaticamente.</p>`;
+ const bindMun=()=>{const m=$("radarMun");if(m)m.onchange=()=>{radar.mun=m.value;renderRadar()}};
+ if(!list.length){body.innerHTML=stat+`<div class="empty c-orange" style="padding:20px"><div class="t">${ic("radar")}</div><b>${radar.tab==="novos"?"Nenhum edital novo":"Nada aqui"}</b>${radar.tab==="novos"?"Quando a busca encontrar um edital novo e válido, ele aparece aqui na hora.":""}</div>`;bindMun();return}
+ const ord={aberto:0,fluxo:1,em_breve:2,encerrado:3};
+ const sorted=[...list].sort(radar.tab==="encerrados"?(a,b)=>(b.prazo||b.dataEvento||b.atualizadoEm||"").localeCompare(a.prazo||a.dataEvento||a.atualizadoEm||""):(a,b)=>(ord[a.situacao]??4)-(ord[b.situacao]??4)||(a.prazo||"9999").localeCompare(b.prazo||"9999")||(b.publicadoEm||b.detectadoEm||"").localeCompare(a.publicadoEm||a.detectadoEm||""));
+ body.innerHTML=stat+`<div class="rgrid">${sorted.map(r=>{const st=radarState(r.id);const isPast=radarPast(r);const[sl,sc]=isPast?(r.situacao==="encerrado"?RADAR_SIT.encerrado:r.dataEvento&&r.dataEvento<todayISO()?["Evento já realizado","b-mute"]:["Prazo encerrado","b-mute"]):(RADAR_SIT[r.situacao]||["—","b-mute"]);const isNew=!st&&!isPast;const mun=radarMun(r);
+  return `<div class="ritem ${isNew?"isnew":""} ${isPast?"past":""}">${isNew?`<span class="nw">NOVO</span>`:""}<div class="rt">${esc(r.titulo)}</div>
+  <div class="rm"><span class="badge ${sc}">${sl}</span>${r.prazo&&!isPast?dueChip(r.prazo):r.prazo?`<span>Prazo: ${fmtDate(r.prazo)}</span>`:""}${mun?`<span>${ic("pin","xs")} ${esc(mun)}</span>`:""}<span>${ic("building","xs")} ${esc(r.orgao||"")}</span></div>
+  ${r.dataEvento||r.publicadoEm||r.detectadoEm?`<div class="rm">${r.dataEvento?`<span>${ic("cal","xs")} Evento: <b>${fmtDate(r.dataEvento)}</b></span>`:""}${r.publicadoEm?`<span>Publicado em ${fmtDate(r.publicadoEm)}</span>`:r.detectadoEm?`<span>Encontrado ${fmtWhen(r.detectadoEm)}</span>`:""}</div>`:""}
   ${r.resumo?`<div class="rs">${esc(r.resumo)}</div>`:""}${r.valor?`<div class="rm">${ic("star","xs")} ${esc(r.valor)}</div>`:""}
-  <div class="ra">${st==="added"?`<span class="badge b-ok">${ic("check","xs")}Nos meus editais</span>`:`<button class="btn sm primary" data-radd="${esc(r.id)}">${ic("plus","sm")}Adicionar aos meus editais</button>`}${r.link?`<a class="btn sm soft c-blue" href="${esc(r.link)}" target="_blank" rel="noopener">${ic("ext","sm")}Edital</a>`:""}${r.fonte&&r.fonte!==r.link?`<a class="btn sm ghost" href="${esc(r.fonte)}" target="_blank" rel="noopener">Fonte</a>`:""}${st==="ignored"?`<button class="btn sm ghost" data-rundo="${esc(r.id)}">Restaurar</button>`:st?"":`<button class="btn sm ghost" data-rign="${esc(r.id)}">Ignorar</button>`}</div></div>`}).join("")}</div>`;
+  <div class="ra">${st==="added"?`<span class="badge b-ok">${ic("check","xs")}Nos meus editais</span>`:isPast?"":`<button class="btn sm primary" data-radd="${esc(r.id)}">${ic("plus","sm")}Adicionar aos meus editais</button>`}${r.link?`<a class="btn sm soft c-blue" href="${esc(r.link)}" target="_blank" rel="noopener">${ic("ext","sm")}Edital</a>`:""}${r.fonte&&r.fonte!==r.link?`<a class="btn sm ghost" href="${esc(r.fonte)}" target="_blank" rel="noopener">Fonte</a>`:""}${st==="ignored"?`<button class="btn sm ghost" data-rundo="${esc(r.id)}">Restaurar</button>`:st||isPast?"":`<button class="btn sm ghost" data-rign="${esc(r.id)}">Ignorar</button>`}</div></div>`}).join("")}</div>`;
+ bindMun();
  body.querySelectorAll("[data-radd]").forEach(b=>b.onclick=()=>radarAdd(b.dataset.radd));
  body.querySelectorAll("[data-rign]").forEach(b=>b.onclick=async()=>{await setRadarState(b.dataset.rign,"ignored");renderAll()});
  body.querySelectorAll("[data-rundo]").forEach(b=>b.onclick=async()=>{await setRadarState(b.dataset.rundo,"");renderAll()})}
 const RADAR_ORGS={secult:{tipo:"Secretaria",nome:"Secretaria de Estado da Cultura e Economia Criativa de Alagoas",sigla:"SECULT-AL",site:"https://secult.al.gov.br",end:"Praça dos Martírios, Centro",cid:"Maceió",uf:"AL",notas:"Inscrições dos editais estaduais pelo Cadastro Único da Cultura de Alagoas (CUCA): cuca.al.gov.br",resp:[]},
  fmac:null};
 async function radarAdd(id){const r=radar.items.find(x=>x.id===id);if(!r)return;let org=r.orgaoId||"";
- if(org&&!mem.orgs[org]&&RADAR_ORGS[org])await put("orgs",org,{id:org,...RADAR_ORGS[org],at:Date.now()});if(org&&!mem.orgs[org])org="";
+ if(org&&!mem.orgs[org]&&RADAR_ORGS[org])await put("orgs",org,{id:org,...RADAR_ORGS[org],at:Date.now()});else if(org&&!mem.orgs[org]&&!(org in RADAR_ORGS)&&r.orgao)await put("orgs",org,{id:org,tipo:/^pm-/.test(org)?"Prefeitura":"Secretaria",nome:r.orgao,sigla:"",cnpj:"",tel:"",email:"",site:"",end:"",cid:r.municipio||"",uf:"AL",resp:[],notas:"Adicionado pelo radar de editais.",at:Date.now()});if(org&&!mem.orgs[org])org="";
  const existing=Object.values(mem.editais).find(e=>e.radarId===id||(id.startsWith("fmac-toca-tudo")&&e.main));
  if(existing){await put("editais",existing.id,{...existing,radarId:id,link:existing.link||r.link,prazo:existing.prazo||r.prazo||""})}
- else await put("editais","r-"+id,{id:"r-"+id,radarId:id,tit:r.titulo,org,status:r.situacao==="em_breve"?"Interesse":"Interesse",prazo:r.prazo||"",data:"",valor:r.valor||"",link:r.link||r.fonte||"",notas:[r.resumo,r.situacao==="fluxo"?"Fluxo contínuo.":"",r.fonte?"Fonte: "+r.fonte:""].filter(Boolean).join(" "),at:Date.now()});
+ else await put("editais","r-"+id,{id:"r-"+id,radarId:id,tit:r.titulo,org,status:r.situacao==="em_breve"?"Interesse":"Interesse",prazo:r.prazo||"",data:r.dataEvento||"",valor:r.valor||"",link:r.link||r.fonte||"",notas:[r.resumo,r.situacao==="fluxo"?"Fluxo contínuo.":"",r.fonte?"Fonte: "+r.fonte:""].filter(Boolean).join(" "),at:Date.now()});
  await setRadarState(id,"added");toast("Adicionado aos seus editais");renderAll()}
 async function radarConnect(){if(IS_PWA_BUILD||!window.claude||!claude.use){radar.loaded=true;renderRadar();return}
  let d=null;try{d=await Promise.race([claude.use("db"),new Promise(r=>setTimeout(()=>r(null),10000))])}catch(e){d=null}
  radar.loaded=true;if(!d){renderRadar();return}radar.db=d;
  const t=setTimeout(()=>{if(!radar.items.length){$("radarSub").textContent="O radar ainda não respondeu. Os editais aparecem assim que a conexão for estabelecida."}},10000);
  try{d.collection("radar").onSnapshot(snap=>{clearTimeout(t);const before=new Set(radar.items.map(x=>x.id));radar.items=snap.docs.filter(x=>x.exists).map(x=>({id:x.id,...x.data()}));
-   const fresh=radar.items.filter(x=>!before.has(x.id)&&!radarState(x.id)&&x.situacao!=="encerrado");if(!radar.first&&fresh.length)toast(`Radar: ${fresh.length} edital(is) novo(s) encontrado(s)`);radar.first=false;renderAll()},err=>{radar.db=null;renderRadar()});
+   const fresh=radar.items.filter(x=>!before.has(x.id)&&!radarState(x.id)&&radarValid(x));if(!radar.first&&fresh.length)toast(`Radar: ${fresh.length} edital(is) novo(s) encontrado(s)`);radar.first=false;renderAll()},err=>{radar.db=null;renderRadar()});
   d.doc("status/sync").onSnapshot(s=>{radar.sync=s.exists?s.data():null;renderRadar()},()=>{})}catch(e){radar.db=null;renderRadar()}
  renderRadar()}
 
