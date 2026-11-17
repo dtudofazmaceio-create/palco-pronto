@@ -5658,6 +5658,13 @@ window.palcoBridge={
  apply:p=>{if(p.profile)Object.assign(state.profile,p.profile);if(p.release)Object.assign(state.release,p.release);touch();try{go(state.tab);}catch(e){}},
  go:t=>{try{go(t);}catch(e){}},
  flush:()=>persistKV(),
+ backupData:()=>{ return {app:'portfolio-eventos',versao:5,exportadoEm:new Date().toISOString(),profile:state.profile,settings:state.settings,events:state.events,services:state.services,testimonials:state.testimonials,clients:state.clients,facts:state.facts,release:state.release,apres:state.apres,packages:state.packages,videos:state.videos,report:state.report,decl:state.decl,coach:state.coach,photos:[...photos.values()]};},
+ restoreData:async d=>{if(!d||d.app!=='portfolio-eventos')throw new Error('backup do Portfólio inválido');
+  state.profile=Object.assign(clone(DEF_PROFILE),d.profile||{});
+  const sv=d.settings||{};state.settings=Object.assign(clone(DEF_SET),sv);state.settings.secoes=Object.assign(clone(DEF_SET.secoes),sv.secoes||{});
+  state.release=Object.assign(clone(DEF_RELEASE),d.release||{});state.events=d.events||[];state.services=d.services||[];state.testimonials=d.testimonials||[];state.clients=d.clients||[];state.facts=d.facts||[];state.apres=d.apres||[];state.packages=d.packages||[];state.videos=d.videos||[];state.report=Object.assign(clone(DEF_REPORT),d.report||{});state.decl=mergeDecl(d.decl);state.coach=mergeCoach(d.coach);
+  photos.clear();(d.photos||[]).forEach(p=>photos.set(p.id,p));normalizeLoaded();await persistAll();
+ try{go('inicio');}catch(e){}},
  /* fotos vindas do Palco Pronto: um evento por grupo, espelhando o que está lá (fotos adicionadas aqui à mão são mantidas) */
  syncPhotos:async groups=>{let add=0,rem=0;
   for(const g of groups){let ev=state.events.find(e=>e.palco===g.key);
